@@ -48,5 +48,5 @@ jobs:
           docker rm microservice-university
           docker rmi ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs
           docker pull ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
-          docker run -d -p 4001:4001 --name microservice-university ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
+          docker run -d -p 4002:4002 --name microservice-university ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
           '
