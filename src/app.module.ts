@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
+import { UniversityModule } from './modules/university/university.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import configuration from './config/configuration';
         ttl: config.get('http.throttle.ttl'),
         limit: config.get('http.throttle.limit'),
       }),
-    })
+    }),
+    UniversityModule
   ],
   controllers: [AppController],
   providers: [
