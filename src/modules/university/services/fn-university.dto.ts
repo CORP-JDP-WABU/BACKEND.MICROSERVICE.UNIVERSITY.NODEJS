@@ -15,14 +15,15 @@ export class FnUniversityService {
     ) {}
 
     async execute(): Promise<response.ResponseGenericDto> {
-      const findAllUniversities = await this.universityModel.find({ "auditProperties.status.code": 1 }, { _id:1, name: 1, carrers: 1 });  
+      const findAllUniversities = await this.universityModel.find({ "auditProperties.status.code": 1 }, { _id:1, name: 1, careers: 1 });  
     
       const universities : universityDto.ResponseUniversityDto[] = findAllUniversities.map(university => {
         
         const careers: any[]  = university.careers.map(carrer => {
             return {
                 idCarrer: String(carrer.idCareer),
-                name: carrer.name
+                name: carrer.name,
+                cicles: carrer.cicles
             }
         })
         
