@@ -1,20 +1,20 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 class Career {
-    @ApiProperty()
-    idCareer: string;
+  @ApiProperty()
+  idCareer: string;
 
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 }
 
 export class ResponseUniversityDto {
-    @ApiProperty()
-    idUniversity: string;
+  @ApiProperty()
+  idUniversity: string;
 
-    @ApiProperty()
-    name: string;
+  @ApiProperty()
+  name: string;
 
-    @ApiProperty({ type: [Career], isArray: true })
-    careers: Career[];
+  @ApiProperty({ type: [Career], isArray: true })
+  careers: Career[];
 }

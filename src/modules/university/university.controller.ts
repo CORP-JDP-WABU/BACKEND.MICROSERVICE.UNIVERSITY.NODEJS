@@ -14,10 +14,9 @@ import * as exception from 'src/exception';
 @Controller('university/v1.0')
 @ApiTags('UNIVERSITY')
 export class UniversityController {
- 
-    constructor(
-        private readonly fnUniversityService: services.FnUniversityService
-    ) {}
+  constructor(
+    private readonly fnUniversityService: services.FnUniversityService,
+  ) {}
 
   @UseGuards(ThrottlerGuard)
   @Throttle()

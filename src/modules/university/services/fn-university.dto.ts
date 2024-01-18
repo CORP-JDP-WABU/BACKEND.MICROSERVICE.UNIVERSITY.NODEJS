@@ -6,40 +6,40 @@ import * as response from 'src/common/dto';
 import * as universityDto from '../dto';
 @Injectable()
 export class FnUniversityService {
+  private logger = new Logger(FnUniversityService.name);
 
-    private logger = new Logger(FnUniversityService.name);
+  constructor(
+    @InjectModel(schemas.Universities.name)
+    private readonly universityModel: mongoose.Model<schemas.UniversitiesDocument>,
+  ) {}
 
-    constructor(
-        @InjectModel(schemas.Universities.name)
-        private readonly universityModel: mongoose.Model<schemas.UniversitiesDocument>,
-    ) {}
+  async execute(): Promise<response.ResponseGenericDto> {
+    const findAllUniversities = await this.universityModel.find(
+      { 'auditProperties.status.code': 1 },
+      { _id: 1, name: 1, careers: 1 },
+    );
 
-    async execute(): Promise<response.ResponseGenericDto> {
-      const findAllUniversities = await this.universityModel.find({ "auditProperties.status.code": 1 }, { _id:1, name: 1, careers: 1 });  
-    
-      const universities : universityDto.ResponseUniversityDto[] = findAllUniversities.map(university => {
-        
-        const careers: any[]  = university.careers.map(carrer => {
-            return {
-                idCarrer: String(carrer.idCareer),
-                name: carrer.name,
-                cicles: carrer.cicles
-            }
-        })
-        
+    const universities: universityDto.ResponseUniversityDto[] =
+      findAllUniversities.map((university) => {
+        const careers: any[] = university.careers.map((carrer) => {
+          return {
+            idCarrer: String(carrer.idCareer),
+            name: carrer.name,
+            cicles: carrer.cicles,
+          };
+        });
+
         return {
-            idUniversity: university.id,
-            name: university.name,
-            careers: careers
-        }
-        
-      })
+          idUniversity: university.id,
+          name: university.name,
+          careers: careers,
+        };
+      });
 
-      return <response.ResponseGenericDto>{
-        message: 'Processo exitoso',
-        operation: `::${FnUniversityService.name}::execute`,
-        data: universities
-      };
-    }
-
+    return <response.ResponseGenericDto>{
+      message: 'Processo exitoso',
+      operation: `::${FnUniversityService.name}::execute`,
+      data: universities,
+    };
+  }
 }

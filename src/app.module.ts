@@ -29,7 +29,7 @@ import { UniversityModule } from './modules/university/university.module';
         limit: config.get('http.throttle.limit'),
       }),
     }),
-    UniversityModule
+    UniversityModule,
   ],
   controllers: [AppController],
   providers: [

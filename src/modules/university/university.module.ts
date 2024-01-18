@@ -10,12 +10,10 @@ import * as services from './services';
       {
         name: schemas.Universities.name,
         schema: schemas.UniversitiesSchema,
-      }
-    ])
+      },
+    ]),
   ],
   controllers: [UniversityController],
-  providers: [
-    services.FnUniversityService
-  ],
+  providers: [services.FnUniversityService],
 })
 export class UniversityModule {}
