@@ -1,36 +1,63 @@
 name: ci_cd_university
- 
+
 on:
   push:
     branches: [develop]
     
   pull_request:
     branches: [develop]
-  
+
 jobs:
-  deploy:
+  build_and_push:
     runs-on: ubuntu-latest
- 
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
- 
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '14'
- 
+
+    - name: Generate .env file
+      run: |
+        echo "Generating .env file"
+        echo "SERVICE_HTTP_HOST=0.0.0.0" > .env
+        echo "SERVICE_HTTP_PORT=4002" >> .env
+        echo "SERVICE_BASE_PATH=/api" >> .env
+        echo "SERVICE_HTTP_THROTTLE_TTL=60" >> .env
+        echo "SERVICE_HTTP_THROTTLE_LIMIT=10" >> .env
+        echo "SWAGGER_BASE_PATH=/api/microservice-university" >> .env
+        echo "DATABASE_MONGO_HOSTNAME=${{ secrets.ENV_DATABASE_MONGO_HOSTNAME }}" >> .env
+        echo "DATABASE_MONGO_USER=${{ secrets.ENV_DATABASE_MONGO_USER }}" >> .env
+        echo "DATABASE_MONGO_PASSWORD=${{ secrets.ENV_DATABASE_MONGO_PASSWORD }}" >> .env
+        echo "DATABASE_MONGO_NAME=${{ secrets.ENV_DATABASE_MONGO_NAME }}" >> .env
+
     - name: Install Dependencies
       run: npm install
- 
+
     - name: Build Docker Image
       run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
- 
+
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
- 
+
     - name: Push Docker Image to Docker Hub
       run: docker push ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
+
+  deploy_to_ec2:
+    needs: build_and_push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'
 
     - name: Build & Deploy
       env:
