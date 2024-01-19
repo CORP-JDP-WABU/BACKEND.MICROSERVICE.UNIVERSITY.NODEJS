@@ -13,7 +13,7 @@ export class Universities {
     raw({
       type: [
         {
-          idCareer: mongoose.Types.ObjectId,
+          _id: mongoose.Types.ObjectId,
           name: String,
           cicles: [String],
         },
@@ -21,7 +21,7 @@ export class Universities {
     }),
   )
   careers: {
-    idCareer: mongoose.Types.ObjectId;
+    _id: mongoose.Types.ObjectId;
     name: string;
     cicles: string[];
   }[];
