@@ -8,12 +8,16 @@ import * as services from './services';
   imports: [
     MongooseModule.forFeature([
       {
+        name: schemas.Suggests.name,
+        schema: schemas.SuggestsSchema,
+      },
+      {
         name: schemas.Universities.name,
         schema: schemas.UniversitiesSchema,
       },
     ]),
   ],
   controllers: [UniversityController],
-  providers: [services.FnUniversityService],
+  providers: [services.FnUniversityService, services.FnSuggestService],
 })
 export class UniversityModule {}

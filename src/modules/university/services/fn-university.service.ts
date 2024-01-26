@@ -23,7 +23,7 @@ export class FnUniversityService {
       findAllUniversities.map((university) => {
         const careers: any[] = university.careers.map((carrer) => {
           return {
-            idCarrer: String(carrer._id),
+            idCareer: String(carrer._id),
             name: carrer.name,
             cicles: carrer.cicles,
           };

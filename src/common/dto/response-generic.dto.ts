@@ -9,5 +9,5 @@ export class ResponseGenericDto {
   operation: string;
 
   @ApiProperty()
-  data: universityDto.ResponseUniversityDto[];
+  data: universityDto.ResponseUniversityDto[] | any;
 }
