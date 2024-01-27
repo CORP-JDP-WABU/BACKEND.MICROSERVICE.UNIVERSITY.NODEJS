@@ -15,9 +15,21 @@ import * as services from './services';
         name: schemas.Universities.name,
         schema: schemas.UniversitiesSchema,
       },
+      {
+        name: schemas.UniversityCourse.name,
+        schema: schemas.UniversityCourseSchema,
+      },
+      {
+        name: schemas.UniversityTeacher.name,
+        schema: schemas.UniversityTeacherSchema,
+      },
     ]),
   ],
   controllers: [UniversityController],
-  providers: [services.FnUniversityService, services.FnSuggestService],
+  providers: [
+    services.FnUniversityService,
+    services.FnUniversityCourseTeacherService,
+    services.FnSuggestService,
+  ],
 })
 export class UniversityModule {}

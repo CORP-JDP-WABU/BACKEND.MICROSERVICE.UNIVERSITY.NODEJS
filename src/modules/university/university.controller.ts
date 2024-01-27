@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Body } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Body, Param } from '@nestjs/common';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import {
   ApiConflictResponse,
@@ -16,6 +16,7 @@ import * as request from 'src/modules/university/dto';
 export class UniversityController {
   constructor(
     private readonly fnUniversityService: services.FnUniversityService,
+    private readonly fnUniversityCourseTeacherService: services.FnUniversityCourseTeacherService,
     private readonly fnSuggestUniversityService: services.FnSuggestService,
   ) {}
 
@@ -34,6 +35,25 @@ export class UniversityController {
   })
   findAll(): Promise<response.ResponseGenericDto> {
     return this.fnUniversityService.execute();
+  }
+
+  @UseGuards(ThrottlerGuard)
+  @Throttle()
+  @Get(':idUniversity/course/teacher/')
+  @ApiCreatedResponse({
+    description: 'The university course and teacher has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description:
+      'The university course and teacher has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description:
+      'The university course and teacher has been failed by internal error.',
+  })
+  findAllTeacherAndCourse(@Param("idUniversity") idUniversity: string ): Promise<response.ResponseGenericDto> {
+    return this.fnUniversityCourseTeacherService.execute(idUniversity);
   }
 
   @UseGuards(ThrottlerGuard)
