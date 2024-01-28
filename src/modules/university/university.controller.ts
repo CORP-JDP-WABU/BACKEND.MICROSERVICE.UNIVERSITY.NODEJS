@@ -1,6 +1,7 @@
 import { Controller, UseGuards, Get, Post, Body, Param } from '@nestjs/common';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import {
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
@@ -10,6 +11,9 @@ import {
 import * as services from './services';
 import * as response from 'src/common/dto';
 import * as request from 'src/modules/university/dto';
+import { SecurityGuard } from 'src/common/guard';
+import { UserDecorator } from 'src/common/decorator';
+import { UserDecoratorInterface } from 'src/common/interfaces';
 
 @Controller('university/v1.0')
 @ApiTags('UNIVERSITY')
@@ -37,7 +41,8 @@ export class UniversityController {
     return this.fnUniversityService.execute();
   }
 
-  @UseGuards(ThrottlerGuard)
+  @ApiBearerAuth()
+  @UseGuards(SecurityGuard, ThrottlerGuard)
   @Throttle()
   @Get(':idUniversity/course/teacher/')
   @ApiCreatedResponse({
@@ -52,8 +57,11 @@ export class UniversityController {
     description:
       'The university course and teacher has been failed by internal error.',
   })
-  findAllTeacherAndCourse(@Param("idUniversity") idUniversity: string ): Promise<response.ResponseGenericDto> {
-    return this.fnUniversityCourseTeacherService.execute(idUniversity);
+  findAllTeacherAndCourse(
+    @Param('idUniversity') idUniversity: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface
+  ): Promise<response.ResponseGenericDto> {
+    return this.fnUniversityCourseTeacherService.execute(idUniversity, userDecorator);
   }
 
   @UseGuards(ThrottlerGuard)

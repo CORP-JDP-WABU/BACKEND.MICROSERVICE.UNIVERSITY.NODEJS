@@ -17,4 +17,13 @@ export default () => ({
     pass: process.env.DATABASE_MONGO_PASSWORD,
     dbName: process.env.DATABASE_MONGO_NAME,
   },
+  client: {
+    security: {
+      host: process.env.CLIENT_SECURITY_HOST,
+      port: process.env.CLIENT_SECURITY_PORT,
+    },
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
 });

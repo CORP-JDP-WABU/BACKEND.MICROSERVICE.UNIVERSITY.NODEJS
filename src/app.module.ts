@@ -6,6 +6,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import configuration from './config/configuration';
 import { UniversityModule } from './modules/university/university.module';
+import { SecurityModule } from './common/client/security/security.module';
+import { CryptoModule } from './common/crypto/crypto.module';
 
 @Module({
   imports: [
@@ -13,6 +15,13 @@ import { UniversityModule } from './modules/university/university.module';
       isGlobal: true,
       cache: true,
       load: [configuration],
+    }),
+    SecurityModule.registerAsync({
+      global: true,
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) =>
+        configService.get('client.security'),
+      inject: [ConfigService]
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -30,6 +39,7 @@ import { UniversityModule } from './modules/university/university.module';
       }),
     }),
     UniversityModule,
+    CryptoModule
   ],
   controllers: [AppController],
   providers: [

@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UniversityController } from './university.controller';
 import * as schemas from 'src/common/schemas';
 import * as services from './services';
+import { CryptoModule } from 'src/common/crypto/crypto.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import * as services from './services';
         schema: schemas.UniversityTeacherSchema,
       },
     ]),
+    CryptoModule
   ],
   controllers: [UniversityController],
   providers: [

@@ -1,7 +1,7 @@
 import { ConflictException } from '@nestjs/common';
 
-export class InvalidCredentialsCustomException extends ConflictException {
-  constructor(originException: string) {
-    super(`correo y/o contraseña incorrectos [${originException}]`);
+export class UnahutorizedUniversityCustomException extends ConflictException {
+  constructor(customCode: string) {
+    super(`Usted no esta authorizado para realizar consultas en esta universidad [${customCode}]`);
   }
 }
