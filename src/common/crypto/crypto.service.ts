@@ -16,7 +16,6 @@ export class CryptoService {
       this.iv,
     );
     let decrypted = decipher.update(encryptedText);
-    console.log("CryptoService", JSON.stringify(decrypted))
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
   }

@@ -20,7 +20,6 @@ export class SecurityGuard implements CanActivate {
           throw new UnauthorizedException();
         }
         const configStudent = await this.securityService.callFxConfigStudent({ idStudent });
-        console.log("configStudent", JSON.stringify(configStudent))
         request.userSession = {
           idStudent: configStudent._id,
           email: configStudent.email,
