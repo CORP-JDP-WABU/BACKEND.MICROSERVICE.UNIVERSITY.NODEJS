@@ -23,11 +23,14 @@ export class FnTeacherInCourseService {
 
     const teacher = await this.universityTeacherModel.findById(idTeacher);
     if(!teacher) {
-        throw new exception.TeacherNotFoundCustomException(`NOTFOUD_TEACHER`);
+        throw new exception.TeacherNotFoundCustomException(`NOTFOUND_TEACHER`);
     }
 
     const courseById = teacher.courses.find(course => course._id.toString() === idCourse);
-    
+    if (courseById == null || courseById == undefined) {
+        throw new exception.CourseNotFoundCustomException(`NOTFOUND_COURSE_TEACHER`);
+    }
+
     return <response.ResponseGenericDto>{
         message: 'Processo exitoso',
         operation: `::${FnTeacherInCourseService.name}::execute`,

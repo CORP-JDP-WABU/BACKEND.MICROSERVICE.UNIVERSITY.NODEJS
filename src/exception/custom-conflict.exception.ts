@@ -11,7 +11,15 @@ export class UnahutorizedUniversityCustomException extends ConflictException {
 export class TeacherNotFoundCustomException extends ConflictException {
   constructor(customCode: string) {
     super(
-      `Usted a ingresado un colegio que no a sido registrado en nuestra plataforma [${customCode}`,
+      `Usted a ingresado un profesor que no a sido registrado en nuestra plataforma [${customCode}`,
+    );
+  }
+}
+
+export class CourseNotFoundCustomException extends ConflictException {
+  constructor(customCode: string) {
+    super(
+      `Usted a ingresado un curso, que no a sido registrado para el profesor, en nuestra plataforma [${customCode}`,
     );
   }
 }
