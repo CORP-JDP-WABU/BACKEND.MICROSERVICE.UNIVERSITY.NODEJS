@@ -18,14 +18,16 @@ export class FnUniversityCourseTeacherService {
     private readonly universityTeacherModel: mongoose.Model<schemas.UniversityTeacherDocument>,
   ) {}
 
-  async execute(idUniversity: string, userDecoratorInterface: UserDecoratorInterface): Promise<response.ResponseGenericDto> {
-
-    if(idUniversity != userDecoratorInterface.idUniversity) {
+  async execute(
+    idUniversity: string,
+    userDecoratorInterface: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    if (idUniversity != userDecoratorInterface.idUniversity) {
       throw new exception.UnahutorizedUniversityCustomException(
         `UNAUTHORIZED_UNIVERSITY`,
       );
     }
-    
+
     const universityCoursePromise = this.universityCourseModel.find({
       idUniversity: mongoose.Types.ObjectId(idUniversity),
     });
@@ -38,8 +40,8 @@ export class FnUniversityCourseTeacherService {
       universityTeacherPromise,
     ]);
 
-    this.logger.debug(`universityCoursePromise:${universityCourse.length}`)
-    this.logger.debug(`universityTeacherPromise:${universityTeacher.length}`)
+    this.logger.debug(`universityCoursePromise:${universityCourse.length}`);
+    this.logger.debug(`universityTeacherPromise:${universityTeacher.length}`);
 
     return <response.ResponseGenericDto>{
       message: 'Processo exitoso',

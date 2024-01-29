@@ -59,9 +59,12 @@ export class UniversityController {
   })
   findAllTeacherAndCourse(
     @Param('idUniversity') idUniversity: string,
-    @UserDecorator() userDecorator: UserDecoratorInterface
+    @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.fnUniversityCourseTeacherService.execute(idUniversity, userDecorator);
+    return this.fnUniversityCourseTeacherService.execute(
+      idUniversity,
+      userDecorator,
+    );
   }
 
   @UseGuards(ThrottlerGuard)

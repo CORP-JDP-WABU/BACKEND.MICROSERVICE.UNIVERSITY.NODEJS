@@ -35,6 +35,28 @@ export class UniversityTeacher {
         {
           _id: mongoose.Types.ObjectId,
           name: String,
+          manyQualifications: Number,
+          manyAverageQualifications: Number,
+          manyComments: Number,
+          requiredQualifications: [
+            {
+              qualification: {
+                code: Number,
+                value: String,
+              },
+              averageQualification: Number,
+            },
+          ],
+          optionalQualifications: [
+            {
+              qualification: {
+                code: Number,
+                value: String,
+              },
+              averageQualification: Number,
+              countQualifications: Number,
+            },
+          ],
         },
       ],
     }),
@@ -42,6 +64,28 @@ export class UniversityTeacher {
   courses: {
     _id: mongoose.Types.ObjectId;
     name: string;
+    manyQualifications: number;
+    manyAverageQualifications: number;
+    manyComments: number;
+    requiredQualifications: [
+      {
+        qualification: {
+          code: number;
+          description: string;
+        };
+        averageQualification: number;
+      },
+    ];
+    optionalQualifications: [
+      {
+        qualification: {
+          code: number;
+          description: string;
+        };
+        averageQualification: number;
+        countQualifications: number;
+      },
+    ];
   }[];
 }
 

@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { UniversityModule } from './modules/university/university.module';
 import { SecurityModule } from './common/client/security/security.module';
 import { CryptoModule } from './common/crypto/crypto.module';
+import { TeacherModule } from './modules/teacher/teacher.module';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { CryptoModule } from './common/crypto/crypto.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) =>
         configService.get('client.security'),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -39,7 +40,8 @@ import { CryptoModule } from './common/crypto/crypto.module';
       }),
     }),
     UniversityModule,
-    CryptoModule
+    TeacherModule,
+    CryptoModule,
   ],
   controllers: [AppController],
   providers: [

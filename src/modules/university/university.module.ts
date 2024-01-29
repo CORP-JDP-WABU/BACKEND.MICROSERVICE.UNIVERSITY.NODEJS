@@ -25,7 +25,7 @@ import { CryptoModule } from 'src/common/crypto/crypto.module';
         schema: schemas.UniversityTeacherSchema,
       },
     ]),
-    CryptoModule
+    CryptoModule,
   ],
   controllers: [UniversityController],
   providers: [

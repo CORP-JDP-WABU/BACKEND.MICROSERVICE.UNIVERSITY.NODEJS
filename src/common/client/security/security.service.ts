@@ -29,5 +29,4 @@ export class SecurityService {
     const pattern = { subjet: 'client-security', function: 'config-student' };
     return this.client.send<TResult, TInput>(pattern, dto).toPromise();
   }
-
 }
