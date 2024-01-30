@@ -22,6 +22,7 @@ import { UserDecoratorInterface } from 'src/common/interfaces';
 export class TeacherController {
   constructor(
     private readonly fnTeacherInCourseService: services.FnTeacherInCourseService,
+    private readonly gnTeacherCourseCommentService: services.FnTeacherCourseCommentService
   ) {}
 
   @UseGuards(ThrottlerGuard)
@@ -48,4 +49,29 @@ export class TeacherController {
       userDecorator,
     );
   }
+
+  @UseGuards(ThrottlerGuard)
+  @Throttle()
+  @Get(':idTeacher/course/:idCourse/comment')
+  @ApiCreatedResponse({
+    description: 'The teacher course comment has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The teacher course comment has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The teacher course comment has been failed by internal error.',
+  })
+  findAllTeacherCourseComment(
+    @Param('idTeacher') idTeacher: string,
+    @Param('idCourse') idCourse: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.gnTeacherCourseCommentService.execute(
+      idTeacher,
+      idCourse
+    );
+  }
+
 }

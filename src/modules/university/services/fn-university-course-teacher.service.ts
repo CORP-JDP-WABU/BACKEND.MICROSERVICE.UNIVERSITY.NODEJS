@@ -30,10 +30,10 @@ export class FnUniversityCourseTeacherService {
 
     const universityCoursePromise = this.universityCourseModel.find({
       idUniversity: mongoose.Types.ObjectId(idUniversity),
-    });
+    }).limit(10);
     const universityTeacherPromise = this.universityTeacherModel.find({
       idUniversity: mongoose.Types.ObjectId(idUniversity),
-    });
+    }).limit(10);
 
     const [universityCourse, universityTeacher] = await Promise.all([
       universityCoursePromise,

@@ -12,10 +12,14 @@ import { TeacherController } from './teacher.controller';
         name: schemas.UniversityTeacher.name,
         schema: schemas.UniversityTeacherSchema,
       },
+      {
+        name: schemas.TeacherCourseComments.name,
+        schema: schemas.TeacherCourseCommentsSchema,
+      },
     ]),
     CryptoModule,
   ],
   controllers: [TeacherController],
-  providers: [services.FnTeacherInCourseService],
+  providers: [services.FnTeacherInCourseService, services.FnTeacherCourseCommentService],
 })
 export class TeacherModule {}
