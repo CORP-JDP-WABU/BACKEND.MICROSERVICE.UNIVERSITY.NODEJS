@@ -16,10 +16,14 @@ import { TeacherController } from './teacher.controller';
         name: schemas.TeacherCourseComments.name,
         schema: schemas.TeacherCourseCommentsSchema,
       },
+      {
+        name: schemas.CareerCourseTeacher.name,
+        schema: schemas.CareerCourseTeacherSchema,
+      },
     ]),
     CryptoModule,
   ],
   controllers: [TeacherController],
-  providers: [services.FnTeacherInCourseService, services.FnTeacherCourseCommentService],
+  providers: [services.FnTeacherInCourseService, services.FnTeacherCourseCommentService, services.FnCareerCourseTeacherService],
 })
 export class TeacherModule {}

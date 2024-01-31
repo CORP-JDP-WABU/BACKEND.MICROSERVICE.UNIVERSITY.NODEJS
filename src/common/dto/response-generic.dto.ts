@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import * as universityDto from 'src/modules/university/dto';
+import * as teacherDto from 'src/modules/teacher/dto';
 
 export class ResponseGenericDto {
   @ApiProperty()
@@ -9,5 +10,5 @@ export class ResponseGenericDto {
   operation: string;
 
   @ApiProperty()
-  data: universityDto.ResponseUniversityDto[] | any;
+  data: universityDto.ResponseUniversityDto[] | teacherDto.ResponseCareerTeacherCourseDto[] | any;
 }

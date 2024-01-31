@@ -22,7 +22,8 @@ import { UserDecoratorInterface } from 'src/common/interfaces';
 export class TeacherController {
   constructor(
     private readonly fnTeacherInCourseService: services.FnTeacherInCourseService,
-    private readonly gnTeacherCourseCommentService: services.FnTeacherCourseCommentService
+    private readonly fnTeacherCourseCommentService: services.FnTeacherCourseCommentService,
+    private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService
   ) {}
 
   @UseGuards(ThrottlerGuard)
@@ -68,9 +69,32 @@ export class TeacherController {
     @Param('idCourse') idCourse: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.gnTeacherCourseCommentService.execute(
+    return this.fnTeacherCourseCommentService.execute(
       idTeacher,
       idCourse
+    );
+  }
+
+  @UseGuards(ThrottlerGuard)
+  @Throttle()
+  @Get('career/:idCareer')
+  @ApiCreatedResponse({
+    description: 'The teacher career has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The teacher career has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The teacher career has been failed by internal error.',
+  })
+  findAllTeacherCareer(
+    @Param('idCareer') idCareer: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.fnCareerCourseTeacherService.execute(
+      idCareer,
+      userDecorator
     );
   }
 
