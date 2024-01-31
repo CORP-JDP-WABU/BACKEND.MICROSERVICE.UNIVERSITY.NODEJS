@@ -16,7 +16,15 @@ export class SecurityGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization.split(' ')[1];
+
+    const requestUnauthorized = request.headers.authorization;
+
+    if(requestUnauthorized == undefined || requestUnauthorized == null) {
+      throw new UnauthorizedException('not exist token in header');
+    }
+
+    const token = requestUnauthorized.split(' ')[1];
+
     try {
       const decryptToken = await this.cryptoService.decrypt(token);
       const { idStudent } = await this.securityService.callFxValidateToken({
@@ -24,7 +32,7 @@ export class SecurityGuard implements CanActivate {
       });
 
       if (idStudent.length == 0) {
-        throw new UnauthorizedException();
+        throw new UnauthorizedException('not valid token in database');
       }
       const configStudent = await this.securityService.callFxConfigStudent({
         idStudent,
