@@ -20,24 +20,19 @@ export class FnCareerCourseTeacherService {
     idCareer: string,
     userDecorator: any,
   ) {
+    
+    const { idUniversity, idStudent } = userDecorator;
 
-    const careerTeacherCourse = await this.careerCourseTeacherModel.find({ idCareer: new mongoose.Types.ObjectId(idCareer) });
-
-    const response: dto.ResponseCareerTeacherCourseDto[] = careerTeacherCourse.map(x => {
-      return <dto.ResponseCareerTeacherCourseDto> {
-        idCourse: x.course._id.toString(),
-        courseName: x.course.name,
-        teacherFirstName: x.teacher.firstName,
-        teacherLastName: x.teacher.lastName,
-        idTeacher: x.teacher._id.toString(),
-        teacherPhotoUrl: x.teacher.photoUrl
-      }
-    })
+    const careerTeacherCourse = await this.careerCourseTeacherModel.findOne({
+      idUniversity: new mongoose.Types.ObjectId(idUniversity),
+      idCareer: new mongoose.Types.ObjectId(idCareer),
+      idStudent: new mongoose.Types.ObjectId(idStudent)
+    });
 
     return <response.ResponseGenericDto>{
         message: 'Processo exitoso',
         operation: `::${FnCareerCourseTeacherService.name}::execute`,
-        data: response
+        data: (!careerTeacherCourse) ? [] : careerTeacherCourse.pendingToQualification
     };
   }
 }

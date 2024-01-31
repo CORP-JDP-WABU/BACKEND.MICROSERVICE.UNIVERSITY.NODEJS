@@ -13,31 +13,39 @@ export class CareerCourseTeacher {
   @Prop({ type: mongoose.Types.ObjectId })
   idCareer: mongoose.Types.ObjectId;
 
-  @Prop(
-    raw({
-      _id: mongoose.Types.ObjectId,
-      name: String
-    }),
-  )
-  course: {
-    _id: mongoose.Types.ObjectId;
-    name: string;
-  };
+  @Prop({ type: mongoose.Types.ObjectId })
+  idStudent: mongoose.Types.ObjectId;
 
   @Prop(
     raw({
-      _id: mongoose.Types.ObjectId,
-      firstName: String,
-      lastName: String,
-      photoUrl: String,
+      type: [
+        {
+          course: {
+            idCourse: String,
+            name: String,
+          },
+          teacher: {
+            idTeacher: String,
+            firstName: String,
+            lastName: String,
+            photoUrl: String,
+          },
+        },
+      ],
     }),
   )
-  teacher: {
-    _id: mongoose.Types.ObjectId;
-    firstName: string;
-    lastName: string;
-    photoUrl: string;
-  };
+  pendingToQualification: {
+    course: {
+      idCourse: string;
+      name: string;
+    };
+    teacher: {
+      idTeacher: string;
+      firstName: string;
+      lastName: string;
+      photoUrl: string;
+    };
+  }[];
 
   @Prop({
     type: AuditPropertiesSchema,

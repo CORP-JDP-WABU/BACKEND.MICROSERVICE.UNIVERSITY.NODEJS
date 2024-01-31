@@ -1,22 +1,33 @@
 import { ApiProperty } from "@nestjs/swagger";
 
+class TeacherDto {
+  @ApiProperty()
+  idTeacher: string;
+
+  @ApiProperty()
+  firstName: string;
+
+  @ApiProperty()
+  lastName: string;
+
+  @ApiProperty()
+  photoUrl: string;
+}
+
+class CourseDto {
+
+  @ApiProperty()
+  idCourse: string;
+
+  @ApiProperty()
+  name: string;
+}
+
 export class ResponseCareerTeacherCourseDto {
-    @ApiProperty()
-    idTeacher: string;
+    @ApiProperty({ type: TeacherDto, isArray: false })
+    idTeacher: TeacherDto;
 
-    @ApiProperty()
-    teacherFirstName: string;
-
-    @ApiProperty()
-    teacherLastName: string;
-    
-    @ApiProperty()
-    teacherPhotoUrl: string;
-
-    @ApiProperty()
-    idCourse: string;
-
-    @ApiProperty()
-    courseName: string;
+    @ApiProperty({ type: CourseDto, isArray: false })
+    idCourse: CourseDto;
 
 }
