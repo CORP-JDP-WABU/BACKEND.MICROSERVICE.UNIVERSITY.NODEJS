@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
 class TeacherDto {
   @ApiProperty()
@@ -15,7 +15,6 @@ class TeacherDto {
 }
 
 class CourseDto {
-
   @ApiProperty()
   idCourse: string;
 
@@ -24,10 +23,9 @@ class CourseDto {
 }
 
 export class ResponseCareerTeacherCourseDto {
-    @ApiProperty({ type: TeacherDto, isArray: false })
-    idTeacher: TeacherDto;
+  @ApiProperty({ type: TeacherDto, isArray: false })
+  idTeacher: TeacherDto;
 
-    @ApiProperty({ type: CourseDto, isArray: false })
-    idCourse: CourseDto;
-
+  @ApiProperty({ type: CourseDto, isArray: false })
+  idCourse: CourseDto;
 }

@@ -24,6 +24,10 @@ import { TeacherController } from './teacher.controller';
     CryptoModule,
   ],
   controllers: [TeacherController],
-  providers: [services.FnTeacherInCourseService, services.FnTeacherCourseCommentService, services.FnCareerCourseTeacherService],
+  providers: [
+    services.FnTeacherInCourseService,
+    services.FnTeacherCourseCommentService,
+    services.FnCareerCourseTeacherService,
+  ],
 })
 export class TeacherModule {}

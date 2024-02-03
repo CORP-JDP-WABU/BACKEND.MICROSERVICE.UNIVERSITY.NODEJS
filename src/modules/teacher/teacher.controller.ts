@@ -23,7 +23,7 @@ export class TeacherController {
   constructor(
     private readonly fnTeacherInCourseService: services.FnTeacherInCourseService,
     private readonly fnTeacherCourseCommentService: services.FnTeacherCourseCommentService,
-    private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService
+    private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService,
   ) {}
 
   @UseGuards(ThrottlerGuard)
@@ -62,17 +62,15 @@ export class TeacherController {
     description: 'The teacher course comment has been failed by conflict.',
   })
   @ApiInternalServerErrorResponse({
-    description: 'The teacher course comment has been failed by internal error.',
+    description:
+      'The teacher course comment has been failed by internal error.',
   })
   findAllTeacherCourseComment(
     @Param('idTeacher') idTeacher: string,
     @Param('idCourse') idCourse: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.fnTeacherCourseCommentService.execute(
-      idTeacher,
-      idCourse
-    );
+    return this.fnTeacherCourseCommentService.execute(idTeacher, idCourse);
   }
 
   @UseGuards(ThrottlerGuard)
@@ -92,10 +90,6 @@ export class TeacherController {
     @Param('idCareer') idCareer: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.fnCareerCourseTeacherService.execute(
-      idCareer,
-      userDecorator
-    );
+    return this.fnCareerCourseTeacherService.execute(idCareer, userDecorator);
   }
-
 }
