@@ -24,7 +24,7 @@ export class FnTeacherInCourseService {
       (course) => course._id.toString() === idCourse,
     );
     if (courseById == null || courseById == undefined) {
-      throw new exception.CourseNotFoundCustomException(
+      throw new exception.CourseNotFoundInTeacherCustomException(
         `NOTFOUND_COURSE_TEACHER`,
       );
     }

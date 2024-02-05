@@ -16,10 +16,16 @@ export class TeacherNotFoundCustomException extends ConflictException {
   }
 }
 
-export class CourseNotFoundCustomException extends ConflictException {
+export class CourseNotFoundInTeacherCustomException extends ConflictException {
   constructor(customCode: string) {
     super(
       `Usted a ingresado un curso, que no a sido registrado para el profesor, en nuestra plataforma [${customCode}`,
     );
+  }
+}
+
+export class CourseNotFoundaCustomException extends ConflictException {
+  constructor(customCode: string) {
+    super(`El curso ingresado no existe en nuestra plataforma [${customCode}`);
   }
 }

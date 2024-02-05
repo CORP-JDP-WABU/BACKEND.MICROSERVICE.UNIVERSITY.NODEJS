@@ -14,6 +14,10 @@ export class FnCareerCourseTeacherService {
   ) {}
 
   async execute(idCareer: string, userDecorator: any) {
+    this.logger.debug(
+      `::execute::parameters::${idCareer}::${JSON.stringify(userDecorator)}`,
+    );
+
     const { idUniversity, idStudent } = userDecorator;
 
     const careerTeacherCourse = await this.careerCourseTeacherModel.findOne({

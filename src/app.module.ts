@@ -9,6 +9,7 @@ import { UniversityModule } from './modules/university/university.module';
 import { SecurityModule } from './common/client/security/security.module';
 import { CryptoModule } from './common/crypto/crypto.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
+import { CourseModule } from './modules/course/course.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { TeacherModule } from './modules/teacher/teacher.module';
     }),
     UniversityModule,
     TeacherModule,
+    CourseModule,
     CryptoModule,
   ],
   controllers: [AppController],
