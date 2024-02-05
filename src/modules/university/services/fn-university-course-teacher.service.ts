@@ -20,6 +20,7 @@ export class FnUniversityCourseTeacherService {
 
   async execute(
     idUniversity: string,
+    search: string,
     userDecoratorInterface: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
     if (idUniversity != userDecoratorInterface.idUniversity) {
@@ -31,13 +32,16 @@ export class FnUniversityCourseTeacherService {
     const universityCoursePromise = this.universityCourseModel
       .find({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
+        name: { $regex: search, $options: 'i' }
       })
-      .limit(10);
     const universityTeacherPromise = this.universityTeacherModel
       .find({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
+        $or: [
+          { firstName: { $regex: search, $options: 'i' } },
+          { lastName: { $regex: search, $options: 'i' } },
+        ]
       })
-      .limit(10);
 
     const [universityCourse, universityTeacher] = await Promise.all([
       universityCoursePromise,

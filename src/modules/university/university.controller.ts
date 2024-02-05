@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
@@ -59,10 +59,12 @@ export class UniversityController {
   })
   findAllTeacherAndCourse(
     @Param('idUniversity') idUniversity: string,
+    @Query('search') search: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
     return this.fnUniversityCourseTeacherService.execute(
       idUniversity,
+      search,
       userDecorator,
     );
   }

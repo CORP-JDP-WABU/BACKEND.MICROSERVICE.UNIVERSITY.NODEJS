@@ -84,6 +84,7 @@ export class FnFindTeachersService {
             idTeacher: teacher.id,
             firstName: teacher.firstName,
             lastName: teacher.lastName,
+            photoUrl: teacher.url,
             manyAverageQualifications:
               teacherAndCourse.manyAverageQualifications,
             manyComments: teacherAndCourse.manyComments,
