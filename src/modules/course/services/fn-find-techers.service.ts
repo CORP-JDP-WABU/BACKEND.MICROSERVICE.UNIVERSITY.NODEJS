@@ -69,8 +69,8 @@ export class FnFindTeachersService {
         course: {
             idCourse,
             name: courseName,
-          },
-          teachers: []
+        },
+        teachers: []
     };
 
 
