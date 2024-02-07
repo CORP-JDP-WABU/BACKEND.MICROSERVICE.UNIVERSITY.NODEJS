@@ -29,3 +29,9 @@ export class CourseNotFoundaCustomException extends ConflictException {
     super(`El curso ingresado no existe en nuestra plataforma [${customCode}`);
   }
 }
+
+export class SearchMaxLengthException extends ConflictException {
+  constructor(customCode: string) {
+    super(`El campo de busqueda debe ser mayor a 3 caracteres [${customCode}`);
+  }
+}

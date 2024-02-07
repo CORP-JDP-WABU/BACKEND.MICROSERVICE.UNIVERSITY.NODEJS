@@ -44,7 +44,7 @@ export class UniversityController {
   @ApiBearerAuth()
   @UseGuards(SecurityGuard, ThrottlerGuard)
   @Throttle()
-  @Get(':idUniversity/course/teacher/')
+  @Get(':idUniversity/course/teacher/:skipe/')
   @ApiCreatedResponse({
     description: 'The university course and teacher has been successfully.',
     type: response.ResponseGenericDto,
@@ -59,12 +59,14 @@ export class UniversityController {
   })
   findAllTeacherAndCourse(
     @Param('idUniversity') idUniversity: string,
+    @Param('skipe') skipe: string,
     @Query('search') search: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
     return this.fnUniversityCourseTeacherService.execute(
       idUniversity,
       search,
+      parseInt(skipe),
       userDecorator,
     );
   }
