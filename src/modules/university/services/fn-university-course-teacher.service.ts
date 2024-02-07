@@ -29,27 +29,24 @@ export class FnUniversityCourseTeacherService {
       );
     }
 
+    search = (search == 'ALL') ? '' : this.removeDiactricsEspaces(search);
+    this.logger.debug(`::execute::parameters::${search}`);
+
     const universityCoursePromise = this.universityCourseModel
       .find({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
-        name: { $regex: search, $options: 'i' }
+        searchText: { $regex: search, $options: 'mi' }
       })
     const universityTeacherPromise = this.universityTeacherModel
       .find({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
-        $or: [
-          { firstName: { $regex: search, $options: 'i' } },
-          { lastName: { $regex: search, $options: 'i' } },
-        ]
+        searchText: { $regex: search, $options: 'mi' } 
       })
 
     const [universityCourse, universityTeacher] = await Promise.all([
       universityCoursePromise,
       universityTeacherPromise,
     ]);
-
-    this.logger.debug(`universityCoursePromise:${universityCourse.length}`);
-    this.logger.debug(`universityTeacherPromise:${universityTeacher.length}`);
 
     return <response.ResponseGenericDto>{
       message: 'Processo exitoso',
@@ -60,4 +57,13 @@ export class FnUniversityCourseTeacherService {
       },
     };
   }
+
+  private removeDiactricsEspaces(value: string) : string {
+    return value
+        .normalize('NFD')
+        .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+        .normalize()
+        .toLowerCase()
+        .replace(/ /g, "");
+  } 
 }

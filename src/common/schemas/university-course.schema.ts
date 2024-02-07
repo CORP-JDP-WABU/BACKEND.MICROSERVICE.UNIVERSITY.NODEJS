@@ -12,6 +12,9 @@ export class UniversityCourse {
   name: string;
 
   @Prop({ type: String })
+  searchText: string;
+
+  @Prop({ type: String })
   code: string;
 
   @Prop(
