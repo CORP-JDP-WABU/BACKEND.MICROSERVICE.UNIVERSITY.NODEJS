@@ -14,6 +14,7 @@ import * as request from 'src/modules/university/dto';
 import { SecurityGuard } from 'src/common/guard';
 import { UserDecorator } from 'src/common/decorator';
 import { UserDecoratorInterface } from 'src/common/interfaces';
+import { AnalitycSearchQualificationTeacherGuard } from 'src/common/guard/analityc-search-qualification-teacher.guard';
 
 @ApiBearerAuth()
 @UseGuards(SecurityGuard, ThrottlerGuard)
@@ -26,7 +27,7 @@ export class TeacherController {
     private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService,
   ) {}
 
-  @UseGuards(ThrottlerGuard)
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
   @Throttle()
   @Get(':idTeacher/course/:idCourse')
   @ApiCreatedResponse({
@@ -51,7 +52,7 @@ export class TeacherController {
     );
   }
 
-  @UseGuards(ThrottlerGuard)
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
   @Throttle()
   @Get(':idTeacher/course/:idCourse/comment')
   @ApiCreatedResponse({
@@ -73,7 +74,7 @@ export class TeacherController {
     return this.fnTeacherCourseCommentService.execute(idTeacher, idCourse);
   }
 
-  @UseGuards(ThrottlerGuard)
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
   @Throttle()
   @Get('career/:idCareer')
   @ApiCreatedResponse({

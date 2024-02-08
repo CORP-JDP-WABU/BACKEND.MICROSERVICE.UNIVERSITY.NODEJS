@@ -1,5 +1,6 @@
 export interface UserDecoratorInterface {
-  readonly idStudent: string;
   readonly idUniversity: string;
+  readonly idCareer: string;
+  readonly idStudent: string;
   readonly email: string;
 }

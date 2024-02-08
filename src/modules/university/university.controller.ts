@@ -11,7 +11,7 @@ import {
 import * as services from './services';
 import * as response from 'src/common/dto';
 import * as request from 'src/modules/university/dto';
-import { SecurityGuard } from 'src/common/guard';
+import { AnalitycSearchCourseTeacherGuard, SecurityGuard } from 'src/common/guard';
 import { UserDecorator } from 'src/common/decorator';
 import { UserDecoratorInterface } from 'src/common/interfaces';
 
@@ -42,7 +42,7 @@ export class UniversityController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(SecurityGuard, ThrottlerGuard)
+  @UseGuards(SecurityGuard, ThrottlerGuard, AnalitycSearchCourseTeacherGuard)
   @Throttle()
   @Get(':idUniversity/course/teacher/:skipe/')
   @ApiCreatedResponse({

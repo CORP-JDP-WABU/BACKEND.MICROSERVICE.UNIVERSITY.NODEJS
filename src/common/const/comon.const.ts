@@ -1,5 +1,6 @@
 export const CLIENT = {
   SECURITY: 'CLIENT_SECURITY',
+  OPERATION: 'CLIENT_OPERATION',
 };
 
 export const KEYS = {

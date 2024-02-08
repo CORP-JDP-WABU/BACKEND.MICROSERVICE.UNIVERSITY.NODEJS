@@ -10,6 +10,7 @@ import { SecurityModule } from './common/client/security/security.module';
 import { CryptoModule } from './common/crypto/crypto.module';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { CourseModule } from './modules/course/course.module';
+import { OperationModule } from './common/client/operation/operation.module';
 
 @Module({
   imports: [
@@ -23,6 +24,13 @@ import { CourseModule } from './modules/course/course.module';
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) =>
         configService.get('client.security'),
+      inject: [ConfigService],
+    }),
+    OperationModule.registerAsync({
+      global: true,
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) =>
+        configService.get('client.operation'),
       inject: [ConfigService],
     }),
     MongooseModule.forRootAsync({

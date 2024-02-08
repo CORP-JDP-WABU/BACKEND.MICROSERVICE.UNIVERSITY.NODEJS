@@ -3,12 +3,16 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
+  Logger
 } from '@nestjs/common';
 import { SecurityService } from '../client/security/security.service';
 import { CryptoService } from '../crypto/crypto.service';
 
 @Injectable()
 export class SecurityGuard implements CanActivate {
+
+  private logger = new Logger(SecurityGuard.name);
+
   constructor(
     private readonly securityService: SecurityService,
     private readonly cryptoService: CryptoService,
@@ -38,13 +42,14 @@ export class SecurityGuard implements CanActivate {
         idStudent,
       });
       request.userSession = {
-        idStudent: configStudent._id,
-        email: configStudent.email,
         idUniversity: configStudent.university._id,
+        idStudent: configStudent._id,
+        idCareer: configStudent.career._id,
+        email: configStudent.email,
       };
       return true;
     } catch (error) {
-      console.error('securityGuard:can-active:error', error);
+      this.logger.error('securityguard:canactivate:error', error);
       return false;
     }
   }
