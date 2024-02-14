@@ -31,7 +31,7 @@ export class FnCareerCourseTeacherService {
       operation: `::${FnCareerCourseTeacherService.name}::execute`,
       data: !careerTeacherCourse
         ? []
-        : this.shuffle(careerTeacherCourse.pendingToQualification.filter(quali => (quali.hasQualification && !quali.hasIgnor) || (!quali.hasQualification && quali.hasIgnor) )),
+        : this.shuffle(careerTeacherCourse.pendingToQualification.filter(quali => !quali.hasQualification)),
     };
   }
 
