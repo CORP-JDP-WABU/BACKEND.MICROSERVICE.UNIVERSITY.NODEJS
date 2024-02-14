@@ -89,7 +89,8 @@ export class FnUniversityCourseTeacherService {
           return {
             idCourse: course.id,
             name: course.name,
-            countTeachers: course.teachers.length
+            countTeachers: course.teachers.length,
+            countComment: Math.floor(Math.random() * 30)
           }
         }),
         totalCourse: countCourse,
@@ -98,15 +99,15 @@ export class FnUniversityCourseTeacherService {
           const manyComments = this.sumProperty(teacher.courses, 'manyComments');
           const manyAverageAllQualifications = this.sumProperty(teacher.courses, 'manyAverageQualifications');
           const manyAllQualifications = this.sumProperty(teacher.courses, 'manyQualifications');
-          const manyQualifications = manyAverageAllQualifications / manyAllQualifications;
+          const manyAverageQualifications = manyAverageAllQualifications / manyAllQualifications;
 
           return {
             idTeacher: teacher.id,
             firstName: teacher.firstName,
             lastName: teacher.lastName,
             manyComments,
-            manyQualifications : Number.isNaN(manyQualifications) ? 0 : manyQualifications,
-            manyAllQualifications: Number.isNaN(manyAllQualifications) ? 0 : manyAllQualifications,
+            manyQualifications : Number.isNaN(manyAllQualifications) ? 0 : manyAllQualifications,
+            manyAverageQualifications: Number.isNaN(manyAverageQualifications) ? 0 : manyAverageQualifications,
             photoUrl: teacher.url
           }
         }),
