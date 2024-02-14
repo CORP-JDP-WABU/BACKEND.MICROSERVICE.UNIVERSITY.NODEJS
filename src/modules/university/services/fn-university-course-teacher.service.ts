@@ -81,6 +81,8 @@ export class FnUniversityCourseTeacherService {
       countTeacherPromise
     ]);
 
+    this.logger.debug(`::execute::parameters::finish`);
+
     return <response.ResponseGenericDto>{
       message: 'Processo exitoso',
       operation: `::${FnUniversityCourseTeacherService.name}::execute`,
@@ -90,7 +92,7 @@ export class FnUniversityCourseTeacherService {
             idCourse: course.id,
             name: course.name,
             countTeachers: course.teachers.length,
-            countComment: Math.floor(Math.random() * 30)
+            countComment: 20
           }
         }),
         totalCourse: countCourse,
