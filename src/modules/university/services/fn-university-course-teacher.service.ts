@@ -92,7 +92,7 @@ export class FnUniversityCourseTeacherService {
             idCourse: course.id,
             name: course.name,
             countTeachers: course.teachers.length,
-            countComment: 20
+            countDocument: 0
           }
         }),
         totalCourse: countCourse,
