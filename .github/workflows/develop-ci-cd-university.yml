@@ -1,4 +1,4 @@
-name: ci_cd_university
+name: develop-ci-cd-university
 
 on:
   push:
