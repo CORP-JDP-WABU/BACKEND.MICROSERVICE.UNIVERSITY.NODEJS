@@ -139,6 +139,6 @@ export class FnUniversityCourseTeacherService {
             count++;
         }
     });
-    return count > 0 ? sum / count : 0;
+    return (count == 0) ? 0 : (count > 0 && sum > 0) ? sum / count : 0;
   }
 }
