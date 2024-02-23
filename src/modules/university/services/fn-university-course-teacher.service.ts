@@ -99,7 +99,7 @@ export class FnUniversityCourseTeacherService {
         teacher: universityTeacher.map(teacher => {
 
           const manyComments = this.sumProperty(teacher.courses, 'manyComments');
-          const manyAverageAllQualifications = this.sumProperty(teacher.courses, 'manyAverageQualifications');
+          const manyAverageAllQualifications = this.sumPropertyAverage(teacher.courses, 'manyAverageQualifications');
           const manyAllQualifications = this.sumProperty(teacher.courses, 'manyQualifications');
 
           return {
@@ -108,7 +108,7 @@ export class FnUniversityCourseTeacherService {
             lastName: teacher.lastName,
             manyComments,
             manyQualifications : Number.isNaN(manyAllQualifications) ? 0 : manyAllQualifications,
-            manyAverageQualifications: Number.isNaN(manyAverageAllQualifications) ? 0 : manyAverageAllQualifications,
+            manyAverageQualifications: manyAverageAllQualifications,
             photoUrl: teacher.url
           }
         }),
@@ -127,6 +127,10 @@ export class FnUniversityCourseTeacherService {
   } 
 
   private sumProperty(arr, prop) {
+    return arr.reduce((previous, current) => previous + current[prop], 0);
+  }
+
+  private sumPropertyAverage(arr, prop) {
     let sum = 0;
     let count = 0;
     arr.forEach(item => {
