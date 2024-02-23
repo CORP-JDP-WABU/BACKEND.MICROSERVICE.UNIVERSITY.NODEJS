@@ -108,7 +108,7 @@ export class FnUniversityCourseTeacherService {
             lastName: teacher.lastName,
             manyComments,
             manyQualifications : Number.isNaN(manyAllQualifications) ? 0 : manyAllQualifications,
-            manyAverageQualifications: manyAverageAllQualifications,
+            manyAverageQualifications: Number.isNaN(manyAverageAllQualifications) ? 0 : manyAverageAllQualifications,
             photoUrl: teacher.url
           }
         }),
