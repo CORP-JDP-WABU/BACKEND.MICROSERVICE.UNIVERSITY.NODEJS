@@ -101,7 +101,6 @@ export class FnUniversityCourseTeacherService {
           const manyComments = this.sumProperty(teacher.courses, 'manyComments');
           const manyAverageAllQualifications = this.sumProperty(teacher.courses, 'manyAverageQualifications');
           const manyAllQualifications = this.sumProperty(teacher.courses, 'manyQualifications');
-          const manyAverageQualifications = manyAverageAllQualifications / manyAllQualifications;
 
           return {
             idTeacher: teacher.id,
@@ -109,7 +108,7 @@ export class FnUniversityCourseTeacherService {
             lastName: teacher.lastName,
             manyComments,
             manyQualifications : Number.isNaN(manyAllQualifications) ? 0 : manyAllQualifications,
-            manyAverageQualifications: Number.isNaN(manyAverageQualifications) ? 0 : manyAverageQualifications,
+            manyAverageQualifications: Number.isNaN(manyAverageAllQualifications) ? 0 : manyAverageAllQualifications,
             photoUrl: teacher.url
           }
         }),
@@ -128,6 +127,14 @@ export class FnUniversityCourseTeacherService {
   } 
 
   private sumProperty(arr, prop) {
-    return arr.reduce((previous, current) => previous + current[prop], 0);
+    let sum = 0;
+    let count = 0;
+    arr.forEach(item => {
+        if (item[prop] > 0) {
+            sum += item[prop];
+            count++;
+        }
+    });
+    return count > 0 ? sum / count : 0;
   }
 }
