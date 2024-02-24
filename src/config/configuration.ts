@@ -24,8 +24,8 @@ export default () => ({
     },
     operation: {
       host: process.env.CLIENT_OPERATION_HOST,
-      port: process.env.CLIENT_OPERATION_PORT
-    }
+      port: process.env.CLIENT_OPERATION_PORT,
+    },
   },
   jwt: {
     secret: process.env.JWT_SECRET,

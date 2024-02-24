@@ -30,10 +30,12 @@ export class FnFindTeachersService {
     }
 
     this.logger.debug(
-        `::universityCourse.idUniversity::${universityCourse.idUniversity}::${userDecorator.idUniversity}`,
-      );
+      `::universityCourse.idUniversity::${universityCourse.idUniversity}::${userDecorator.idUniversity}`,
+    );
 
-    if (universityCourse.idUniversity.toString() !== userDecorator.idUniversity) {
+    if (
+      universityCourse.idUniversity.toString() !== userDecorator.idUniversity
+    ) {
       throw new exception.UnahutorizedUniversityCustomException(
         'UNAUTHORIZED_UNIVERSITY',
       );
@@ -66,13 +68,12 @@ export class FnFindTeachersService {
     universityTeachers: schemas.UniversityTeacherDocument[],
   ) {
     let teachersForCourse = {
-        course: {
-            idCourse,
-            name: courseName,
-        },
-        teachers: []
+      course: {
+        idCourse,
+        name: courseName,
+      },
+      teachers: [],
     };
-
 
     for (const teacher of universityTeachers) {
       const teacherAndCourse = teacher.courses.find(
@@ -81,26 +82,22 @@ export class FnFindTeachersService {
 
       if (teacherAndCourse) {
         teachersForCourse.teachers.push({
-            idTeacher: teacher.id,
-            firstName: teacher.firstName,
-            lastName: teacher.lastName,
-            photoUrl: teacher.url,
-            manyAverageQualifications:
-              teacherAndCourse.manyAverageQualifications,
-            manyComments: teacherAndCourse.manyComments,
-            manyQualifications: teacherAndCourse.manyQualifications,
-            requiredQualifications: teacherAndCourse.requiredQualifications,
-            optionalQualifications: teacherAndCourse.optionalQualifications,
+          idTeacher: teacher.id,
+          firstName: teacher.firstName,
+          lastName: teacher.lastName,
+          photoUrl: teacher.url,
+          manyAverageQualifications: teacherAndCourse.manyAverageQualifications,
+          manyComments: teacherAndCourse.manyComments,
+          manyQualifications: teacherAndCourse.manyQualifications,
+          requiredQualifications: teacherAndCourse.requiredQualifications,
+          optionalQualifications: teacherAndCourse.optionalQualifications,
         });
       }
     }
 
-    teachersForCourse.teachers =
-    teachersForCourse.teachers.sort(
-        (a, b) =>
-          b.manyAverageQualifications -
-          a.manyAverageQualifications,
-      );
+    teachersForCourse.teachers = teachersForCourse.teachers.sort(
+      (a, b) => b.manyAverageQualifications - a.manyAverageQualifications,
+    );
 
     return teachersForCourse;
   }

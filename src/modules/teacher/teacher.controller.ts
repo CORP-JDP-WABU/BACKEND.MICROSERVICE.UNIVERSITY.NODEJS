@@ -93,4 +93,27 @@ export class TeacherController {
   ): Promise<response.ResponseGenericDto> {
     return this.fnCareerCourseTeacherService.execute(idCareer, userDecorator);
   }
+
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
+  @Throttle()
+  @Get('university/:idUniversity')
+  @ApiCreatedResponse({
+    description: 'The teacher university has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The teacher university has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The teacher university has been failed by internal error.',
+  })
+  findAllTeacherCampare(
+    @Param('idUniversity') idUniversity: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.fnCareerCourseTeacherService.execute(
+      idUniversity,
+      userDecorator,
+    );
+  }
 }

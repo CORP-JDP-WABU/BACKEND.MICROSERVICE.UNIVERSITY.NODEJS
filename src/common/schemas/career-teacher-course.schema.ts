@@ -32,7 +32,7 @@ export class CareerCourseTeacher {
           },
           hasIgnor: Boolean,
           hasComment: Boolean,
-          hasQualification: Boolean
+          hasQualification: Boolean,
         },
       ],
     }),

@@ -3,14 +3,13 @@ import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
-  Logger
+  Logger,
 } from '@nestjs/common';
 import { SecurityService } from '../client/security/security.service';
 import { CryptoService } from '../crypto/crypto.service';
 
 @Injectable()
 export class SecurityGuard implements CanActivate {
-
   private logger = new Logger(SecurityGuard.name);
 
   constructor(
