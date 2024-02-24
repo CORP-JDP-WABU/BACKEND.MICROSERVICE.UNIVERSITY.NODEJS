@@ -17,6 +17,9 @@ export class UniversityTeacher {
   @Prop({ type: String })
   searchText: string;
 
+  @Prop({ type: [String] })
+  searchTextKeys: string[];
+
   @Prop({ type: String })
   fullName: string;
 

@@ -61,13 +61,23 @@ export class FnUniversityCourseTeacherService {
     const countTeacherPromise = this.universityTeacherModel
       .countDocuments({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
-        searchText: { $regex: search, $options: 'mi' } 
+        searchTextKeys: { 
+          $elemMatch: { 
+            $regex: search, 
+            $options: 'mi' 
+          } 
+        } 
       })
 
       const universityTeacherPromise = this.universityTeacherModel
       .find({
         idUniversity: mongoose.Types.ObjectId(idUniversity),
-        searchText: { $regex: search, $options: 'mi' } 
+        searchTextKeys: { 
+          $elemMatch: { 
+            $regex: search, 
+            $options: 'mi' 
+          } 
+        }
       }, {
         _id: 1, firstName: 1, lastName: 1, url: 1, courses: 1
       })
