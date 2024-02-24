@@ -28,6 +28,7 @@ import { TeacherController } from './teacher.controller';
     services.FnTeacherInCourseService,
     services.FnTeacherCourseCommentService,
     services.FnCareerCourseTeacherService,
+    services.FnTeacherInUniversityService,
   ],
 })
 export class TeacherModule {}

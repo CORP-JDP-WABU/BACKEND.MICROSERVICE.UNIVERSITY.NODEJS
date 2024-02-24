@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import * as exception from 'src/exception';
 import * as schemas from 'src/common/schemas';
 import * as response from 'src/common/dto';
+import * as teacherDto from '../dto';
 
 import { UserDecoratorInterface } from 'src/common/interfaces';
 
@@ -105,6 +106,56 @@ export class FnTeacherInUniversityService {
         }),
         totalTeacher: countTeacher,
       },
+    };
+  }
+
+  async executeCompare(
+    idUniversity: string,
+    requestTeacherCompare: teacherDto.RequestTeachersCompareDto,
+    userDecoratorInterface: UserDecoratorInterface,
+  ) {
+    const teachers = await this.universityTeacherModel.find({
+      idUniversity: mongoose.Types.ObjectId(idUniversity),
+      _id: {
+        $in: requestTeacherCompare.idTeachers.map((x) =>
+          mongoose.Types.ObjectId(x),
+        ),
+      },
+    });
+
+    return <response.ResponseGenericDto>{
+      message: 'Processo exitoso',
+      operation: `::${FnTeacherInUniversityService.name}::execute`,
+      data: teachers.map((teacher) => {
+        const manyComments = this.sumProperty(
+          teacher.courses,
+          'manyComments',
+        );
+        const manyAverageAllQualifications = this.sumPropertyAverage(
+          teacher.courses,
+          'manyAverageQualifications',
+        );
+        const manyAllQualifications = this.sumProperty(
+          teacher.courses,
+          'manyQualifications',
+        );
+
+        return {
+          idTeacher: teacher.id,
+          firstName: teacher.firstName,
+          lastName: teacher.lastName,
+          manyComments,
+          manyQualifications: Number.isNaN(manyAllQualifications)
+            ? 0
+            : manyAllQualifications,
+          manyAverageQualifications: Number.isNaN(
+            manyAverageAllQualifications,
+          )
+            ? 0
+            : manyAverageAllQualifications,
+          photoUrl: teacher.url,
+        };
+      }),
     };
   }
 

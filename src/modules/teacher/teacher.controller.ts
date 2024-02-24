@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, UseGuards, Get, Query, Param, Body } from '@nestjs/common';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
@@ -10,7 +10,7 @@ import {
 
 import * as services from './services';
 import * as response from 'src/common/dto';
-import * as request from 'src/modules/university/dto';
+import * as requestTeacher from './dto';
 import { SecurityGuard } from 'src/common/guard';
 import { UserDecorator } from 'src/common/decorator';
 import { UserDecoratorInterface } from 'src/common/interfaces';
@@ -25,6 +25,7 @@ export class TeacherController {
     private readonly fnTeacherInCourseService: services.FnTeacherInCourseService,
     private readonly fnTeacherCourseCommentService: services.FnTeacherCourseCommentService,
     private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService,
+    private readonly fnTeacherInUniversity: services.FnTeacherInUniversityService,
   ) {}
 
   @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
@@ -107,12 +108,41 @@ export class TeacherController {
   @ApiInternalServerErrorResponse({
     description: 'The teacher university has been failed by internal error.',
   })
-  findAllTeacherCampare(
+  findAllTeacherUniversity(
     @Param('idUniversity') idUniversity: string,
+    @Param('skipe') skipe: string,
+    @Query('search') search: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.fnCareerCourseTeacherService.execute(
+    return this.fnTeacherInUniversity.execute(
       idUniversity,
+      search,
+      parseInt(skipe),
+      userDecorator,
+    );
+  }
+
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
+  @Throttle()
+  @Get('university/:idUniversity')
+  @ApiCreatedResponse({
+    description: 'The teacher university has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The teacher university has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The teacher university has been failed by internal error.',
+  })
+  findTeachersCampare(
+    @Param('idUniversity') idUniversity: string,
+    @Body() requestTeacherCompare: requestTeacher.RequestTeachersCompareDto,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.fnTeacherInUniversity.executeCompare(
+      idUniversity,
+      requestTeacherCompare,
       userDecorator,
     );
   }
