@@ -30,6 +30,10 @@ export class FnTeacherInUniversityService {
     }
 
     if (search.length <= 3) {
+      throw new exception.SearchMaxLengthException(`SEARCH_MIN_LENGTH`);
+    }
+
+    if (search.length > 50) {
       throw new exception.SearchMaxLengthException(`SEARCH_MAX_LENGTH`);
     }
 
