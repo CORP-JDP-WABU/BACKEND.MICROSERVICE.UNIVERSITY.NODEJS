@@ -1,4 +1,12 @@
-import { Controller, UseGuards, Get, Query, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Get,
+  Query,
+  Param,
+  Body,
+  Post,
+} from '@nestjs/common';
 import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import {
   ApiBearerAuth,
@@ -122,18 +130,19 @@ export class TeacherController {
     );
   }
 
-  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
+  @UseGuards(ThrottlerGuard)
   @Throttle()
-  @Get('university/:idUniversity')
+  @Post('university/:idUniversity/compare')
   @ApiCreatedResponse({
-    description: 'The teacher university has been successfully.',
+    description: 'The teacher university compare has been successfully.',
     type: response.ResponseGenericDto,
   })
   @ApiConflictResponse({
-    description: 'The teacher university has been failed by conflict.',
+    description: 'The teacher university compare  has been failed by conflict.',
   })
   @ApiInternalServerErrorResponse({
-    description: 'The teacher university has been failed by internal error.',
+    description:
+      'The teacher university compare has been failed by internal error.',
   })
   findTeachersCampare(
     @Param('idUniversity') idUniversity: string,

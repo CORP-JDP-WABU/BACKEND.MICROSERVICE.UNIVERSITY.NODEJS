@@ -77,7 +77,7 @@ export class UniversityTeacher {
       {
         qualification: {
           code: number;
-          description: string;
+          value: string;
         };
         averageQualification: number;
       },
@@ -86,7 +86,7 @@ export class UniversityTeacher {
       {
         qualification: {
           code: number;
-          description: string;
+          value: string;
         };
         averageQualification: number;
         countQualifications: number;
