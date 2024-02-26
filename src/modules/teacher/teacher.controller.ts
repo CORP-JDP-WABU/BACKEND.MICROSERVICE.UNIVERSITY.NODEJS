@@ -103,9 +103,9 @@ export class TeacherController {
     return this.fnCareerCourseTeacherService.execute(idCareer, userDecorator);
   }
 
-  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
+  @UseGuards(ThrottlerGuard)
   @Throttle()
-  @Get('university/:idUniversity')
+  @Get('university/:idUniversity/:skipe/')
   @ApiCreatedResponse({
     description: 'The teacher university has been successfully.',
     type: response.ResponseGenericDto,
