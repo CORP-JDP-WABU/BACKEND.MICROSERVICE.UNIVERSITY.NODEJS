@@ -21,7 +21,7 @@ export class TeacherCourseComments {
       type: [
         {
           _id: mongoose.Types.ObjectId,
-          photoUrl: String,
+          profileUrl: String,
           createdAt: Date,
           createdAtString: String,
           fullName: String,
@@ -34,7 +34,7 @@ export class TeacherCourseComments {
   )
   students: {
     _id: mongoose.Types.ObjectId;
-    photoUrl: string;
+    profileUrl: string;
     createdAt: Date;
     createdAtString: string;
     fullName: string;
