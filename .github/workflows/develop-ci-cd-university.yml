@@ -33,9 +33,9 @@ jobs:
         echo "DATABASE_MONGO_USER=${{ secrets.ENV_DATABASE_MONGO_USER }}" >> .env
         echo "DATABASE_MONGO_PASSWORD=${{ secrets.ENV_DATABASE_MONGO_PASSWORD }}" >> .env
         echo "DATABASE_MONGO_NAME=${{ secrets.ENV_DATABASE_MONGO_NAME }}" >> .env
-        echo "CLIENT_SECURITY_HOST=172.17.0.5" >> .env
+        echo "CLIENT_SECURITY_HOST=172.18.0.4" >> .env
         echo "CLIENT_SECURITY_PORT=40000" >> .env
-        echo "CLIENT_OPERATION_HOST=172.17.0.4" >> .env
+        echo "CLIENT_OPERATION_HOST=172.18.0.3" >> .env
         echo "CLIENT_OPERATION_PORT=40004" >> .env
 
     - name: Install Dependencies
@@ -79,5 +79,5 @@ jobs:
           docker rm microservice-university
           docker rmi ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs
           docker pull ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
-          docker run -d -p 4002:4002 --name microservice-university ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
+          docker run -d -p 4002:4002 --name microservice-university --net=microservices_network --ip=172.18.0.6 ${{ secrets.DOCKER_USERNAME }}/corp-jdp-wabu-backend-microservice-university-nodejs:latest
           '
