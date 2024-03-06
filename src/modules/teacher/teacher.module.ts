@@ -13,6 +13,10 @@ import { TeacherController } from './teacher.controller';
         schema: schemas.UniversityTeacherSchema,
       },
       {
+        name: schemas.UniversityCourse.name,
+        schema: schemas.UniversityCourseSchema
+      },
+      {
         name: schemas.TeacherCourseComments.name,
         schema: schemas.TeacherCourseCommentsSchema,
       },
@@ -26,6 +30,7 @@ import { TeacherController } from './teacher.controller';
   controllers: [TeacherController],
   providers: [
     services.FnTeacherInCourseService,
+    services.FnTeacherAllCoursesService,
     services.FnTeacherCourseCommentService,
     services.FnCareerCourseTeacherService,
   ],
