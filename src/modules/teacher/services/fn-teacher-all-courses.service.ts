@@ -58,7 +58,7 @@ export class FnTeacherAllCoursesService {
         return {
             manyQualifications,
             manyComments,
-            manyAverageQualifications: averageQualifications / courses.length
+            manyAverageQualifications: averageQualifications == 0 ? 0 : averageQualifications / courses.length
         }
     }
 }
