@@ -32,7 +32,7 @@ export class FnTeacherAllCoursesService {
       }),
     ]);
 
-    const { firstName, lastName, email } = universityTeachers;
+    const { firstName, lastName, email, courses } = universityTeachers;
 
     const idCourseInCareer = universityCoursesInCareer.map((x) => x.id);
     const idCourseInOtherCareer = universityCoursesInOtherCareer.map(
@@ -46,6 +46,8 @@ export class FnTeacherAllCoursesService {
       idCourseInOtherCareer.includes(x._id),
     );
 
+    const generateKpisToTeacher = this.generateKpisToTeacher(courses);
+
     return <response.ResponseGenericDto>{
       message: 'Processo exitoso',
       operation: `::${FnTeacherAllCoursesService.name}::execute`,
@@ -55,9 +57,7 @@ export class FnTeacherAllCoursesService {
           lastName,
           information: '',
           email,
-          averageQualification: 5,
-          quantityComment: 10,
-          quantityStudent: 10,
+          ...generateKpisToTeacher,
         },
         courseInCareer,
         courseInOtherCareer,
@@ -65,10 +65,23 @@ export class FnTeacherAllCoursesService {
     };
   }
 
-  private generateCourseInCareer(idCareer: string, universityCourses: any[]) {}
-
-  private generateCourseInOtherCareer(
-    idCareer: string,
-    universityCourses: any[],
-  ) {}
+  private generateKpisToTeacher(courses: any[]) {
+    const manyQualifications = courses.reduce(
+      (acumulator, real) => acumulator + real.manyQualifications,
+      0,
+    );
+    const manyComments = courses.reduce(
+      (acumulator, real) => acumulator + real.manyComments,
+      0,
+    );
+    const averageQualifications = courses.reduce(
+      (acumulator, real) => acumulator + real.manyAverageQualifications,
+      0,
+    );
+    return {
+      manyQualifications,
+      manyComments,
+      manyAverageQualifications: averageQualifications / courses.length,
+    };
+  }
 }
