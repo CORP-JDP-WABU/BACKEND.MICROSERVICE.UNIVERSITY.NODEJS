@@ -65,23 +65,14 @@ export class FnTeacherAllCoursesService {
     };
   }
 
-  private generateKpisToTeacher(courses: any[]) {
-    const manyQualifications = courses.reduce(
-      (acumulator, real) => acumulator + real.manyQualifications,
-      0,
-    );
-    const manyComments = courses.reduce(
-      (acumulator, real) => acumulator + real.manyComments,
-      0,
-    );
-    const averageQualifications = courses.reduce(
-      (acumulator, real) => acumulator + real.manyAverageQualifications,
-      0,
-    );
-    return {
-      manyQualifications,
-      manyComments,
-      manyAverageQualifications: averageQualifications / courses.length,
-    };
-  }
+    private generateKpisToTeacher(courses: any[]) {
+        const manyQualifications = courses.reduce((acumulator, real) => acumulator + real.manyQualifications, 0);
+        const manyComments = courses.reduce((acumulator, real) => acumulator + real.manyComments, 0);
+        const averageQualifications = courses.reduce((acumulator, real) => acumulator + real.manyAverageQualifications, 0);
+        return {
+            manyQualifications,
+            manyComments,
+            manyAverageQualifications: averageQualifications == 0 ? 0 : averageQualifications / courses.length
+        }
+    }
 }
