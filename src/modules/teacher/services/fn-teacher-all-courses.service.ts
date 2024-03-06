@@ -24,13 +24,15 @@ export class FnTeacherAllCoursesService {
             this.universityCourseModel.find({ "teachers._id": new mongoose.Types.ObjectId(idTeacher), careers : { $ne: [ mongoose.Types.ObjectId(idCareer) ] }})
         ]);
 
-        const { firstName, lastName, email } = universityTeachers;
+        const { firstName, lastName, email, courses } = universityTeachers;
 
         const idCourseInCareer = universityCoursesInCareer.map(x => x.id);
         const idCourseInOtherCareer = universityCoursesInOtherCareer.map(x => x.id);
 
         const courseInCareer = universityTeachers.courses.filter(x => idCourseInCareer.includes(x._id));
         const courseInOtherCareer = universityTeachers.courses.filter(x => idCourseInOtherCareer.includes(x._id));
+
+        const generateKpisToTeacher = this.generateKpisToTeacher(courses);
 
         return <response.ResponseGenericDto>{
             message: 'Processo exitoso',
@@ -41,9 +43,7 @@ export class FnTeacherAllCoursesService {
                     lastName,
                     information: '',
                     email,
-                    averageQualification: 5,
-                    quantityComment: 10,
-                    quantityStudent: 10
+                    ...generateKpisToTeacher
                 },
                 courseInCareer,
                 courseInOtherCareer
@@ -51,11 +51,14 @@ export class FnTeacherAllCoursesService {
           };
     }
 
-    private generateCourseInCareer(idCareer: string, universityCourses: any[]) {
-
-    }
-
-    private generateCourseInOtherCareer(idCareer: string, universityCourses: any[]) {
-
+    private generateKpisToTeacher(courses: any[]) {
+        const manyQualifications = courses.reduce((acumulator, real) => acumulator + real.manyQualifications, 0);
+        const manyComments = courses.reduce((acumulator, real) => acumulator + real.manyComments, 0);
+        const averageQualifications = courses.reduce((acumulator, real) => acumulator + real.manyAverageQualifications, 0);
+        return {
+            manyQualifications,
+            manyComments,
+            manyAverageQualifications: averageQualifications / courses.length
+        }
     }
 }
