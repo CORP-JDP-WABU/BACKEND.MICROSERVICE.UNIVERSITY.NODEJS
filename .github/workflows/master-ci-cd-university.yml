@@ -2,10 +2,10 @@ name: master-ci-cd-university
 
 on:
   push:
-    branches: [release/v3.0.0]
+    branches: [master]
     
   pull_request:
-    branches: [release/v3.0.0]
+    branches: [master]
 
 jobs:
   build_and_push:
