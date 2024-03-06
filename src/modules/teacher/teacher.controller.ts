@@ -31,6 +31,7 @@ import { AnalitycSearchQualificationTeacherGuard } from 'src/common/guard/analit
 export class TeacherController {
   constructor(
     private readonly fnTeacherInCourseService: services.FnTeacherInCourseService,
+    private readonly fnTeacherAllCourseServie: services.FnTeacherAllCoursesService,
     private readonly fnTeacherCourseCommentService: services.FnTeacherCourseCommentService,
     private readonly fnCareerCourseTeacherService: services.FnCareerCourseTeacherService,
     private readonly fnTeacherInUniversity: services.FnTeacherInUniversityService,
@@ -154,5 +155,25 @@ export class TeacherController {
       requestTeacherCompare,
       userDecorator,
     );
+  }
+  @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
+  @Throttle()
+  @Get(':idTeacher/career/:idCareer')
+  @ApiCreatedResponse({
+    description: 'The teacher courses has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The teacher courses has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The teacher courses has been failed by internal error.',
+  })
+  findTeacherAllCourse(
+    @Param('idTeacher') idTeacher: string,
+    @Param('idCareer') idCareer: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.fnTeacherAllCourseServie.execute(idTeacher, idCareer);
   }
 }
