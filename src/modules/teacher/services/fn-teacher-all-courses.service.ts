@@ -24,7 +24,7 @@ export class FnTeacherAllCoursesService {
             this.universityCourseModel.find({ "teachers._id": new mongoose.Types.ObjectId(idTeacher), careers : { $ne: [ mongoose.Types.ObjectId(idCareer) ] }})
         ]);
 
-        const { firstName, lastName, email, courses } = universityTeachers;
+        const { firstName, lastName, email, url, courses } = universityTeachers;
 
         const idCourseInCareer = universityCoursesInCareer.map(x => x.id);
         const idCourseInOtherCareer = universityCoursesInOtherCareer.map(x => x.id);
@@ -39,6 +39,8 @@ export class FnTeacherAllCoursesService {
             operation: `::${FnTeacherAllCoursesService.name}::execute`,
             data: {
                 teacher: {
+                    id: idTeacher,
+                    photoUrl: url,
                     firstName,
                     lastName,
                     information: '',
