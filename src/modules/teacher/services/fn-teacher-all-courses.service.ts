@@ -33,17 +33,23 @@ export class FnTeacherAllCoursesService {
     ]);
 
     const { firstName, lastName, email, url, courses } = universityTeachers;
+    this.logger.debug(`universityTeachers::courses::${JSON.stringify(courses.length)}`)
 
-    const idCourseInCareer = universityCoursesInCareer.map((x) => x.id);
+    const idCourseInCareer = universityCoursesInCareer.map((x) => x._id.toString());
+    this.logger.debug(`universityTeachers::idCourseInCareer::${JSON.stringify(idCourseInCareer.length)}`)
+
+
     const idCourseInOtherCareer = universityCoursesInOtherCareer.map(
-      (x) => x.id,
+      (x) => x.id.toString(),
     );
+    this.logger.debug(`universityTeachers::idCourseInOtherCareer::${JSON.stringify(idCourseInOtherCareer.length)}`)
 
-    const courseInCareer = universityTeachers.courses.filter((x) =>
-      idCourseInCareer.includes(x._id),
+
+    const courseInCareer = courses.filter((x) =>
+      idCourseInCareer.includes(x._id.toString()),
     );
     const courseInOtherCareer = universityTeachers.courses.filter((x) =>
-      idCourseInOtherCareer.includes(x._id),
+      idCourseInOtherCareer.includes(x._id.toString()),
     );
 
     const generateKpisToTeacher = this.generateKpisToTeacher(courses);
@@ -61,8 +67,24 @@ export class FnTeacherAllCoursesService {
           email,
           ...generateKpisToTeacher,
         },
-        courseInCareer,
-        courseInOtherCareer,
+        courseInCareer: courseInCareer.map(x => {
+          return {
+            id: x._id,
+            name: x.name,
+            manyQualifications: x.manyQualifications,
+            manyAverageQualifications: x.manyAverageQualifications,
+            manyComments: x.manyComments
+          }
+        }),
+        courseInOtherCareer: courseInOtherCareer.map(x => {
+          return {
+            id: x._id,
+            name: x.name,
+            manyQualifications: x.manyQualifications,
+            manyAverageQualifications: x.manyAverageQualifications,
+            manyComments: x.manyComments
+          }
+        }),
       },
     };
   }
@@ -76,15 +98,20 @@ export class FnTeacherAllCoursesService {
       (acumulator, real) => acumulator + real.manyComments,
       0,
     );
-    const averageQualifications = courses.reduce(
-      (acumulator, real) => acumulator + real.manyAverageQualifications,
-      0,
-    );
+
+    let averageQualifications = 0;
+    let amountDivide = 0;
+    for (const course of courses) {
+      if(course.manyAverageQualifications > 0) {
+        averageQualifications = averageQualifications + course.manyAverageQualifications;
+        amountDivide++;
+      }
+    }
     return {
       manyQualifications,
       manyComments,
       manyAverageQualifications:
-        averageQualifications == 0 ? 0 : averageQualifications / courses.length,
+        averageQualifications == 0 ? 0 : averageQualifications / amountDivide,
     };
   }
 }
