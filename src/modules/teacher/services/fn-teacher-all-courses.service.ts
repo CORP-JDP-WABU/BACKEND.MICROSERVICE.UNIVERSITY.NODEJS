@@ -36,22 +36,15 @@ export class FnTeacherAllCoursesService {
     this.logger.debug(`universityTeachers::courses::${JSON.stringify(courses.length)}`)
 
     const idCourseInCareer = universityCoursesInCareer.map((x) => x._id.toString());
-    this.logger.debug(`universityTeachers::idCourseInCareer::${JSON.stringify(idCourseInCareer.length)}`)
-
-
-    const idCourseInOtherCareer = universityCoursesInOtherCareer.map(
-      (x) => x.id.toString(),
-    );
-    this.logger.debug(`universityTeachers::idCourseInOtherCareer::${JSON.stringify(idCourseInOtherCareer.length)}`)
-
 
     const courseInCareer = courses.filter((x) =>
       idCourseInCareer.includes(x._id.toString()),
     );
-    const courseInOtherCareer = universityTeachers.courses.filter((x) =>
-      idCourseInOtherCareer.includes(x._id.toString()),
+    this.logger.debug(`universityTeachers::courseInCareer::${JSON.stringify(courseInCareer.length)}`)
+    const courseInOtherCareer = courses.filter((x) =>
+      !idCourseInCareer.includes(x._id.toString()),
     );
-
+    this.logger.debug(`universityTeachers::courseInOtherCareer::${JSON.stringify(courseInOtherCareer.length)}`)
     const generateKpisToTeacher = this.generateKpisToTeacher(courses);
 
     return <response.ResponseGenericDto>{
