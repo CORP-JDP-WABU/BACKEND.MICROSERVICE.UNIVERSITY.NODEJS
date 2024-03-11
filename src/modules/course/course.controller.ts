@@ -24,8 +24,6 @@ export class CourseController {
     private readonly FnFindTeachersService: services.FnFindTeachersService,
   ) {}
 
-  @UseGuards(ThrottlerGuard)
-  @Throttle()
   @Get(':idCourse/teachers')
   @ApiCreatedResponse({
     description: 'The al teachers in course has been successfully.',

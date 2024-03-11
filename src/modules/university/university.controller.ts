@@ -36,7 +36,6 @@ export class UniversityController {
   ) {}
 
   @UseGuards(ThrottlerGuard)
-  @Throttle()
   @Get('')
   @ApiCreatedResponse({
     description: 'The university has been successfully.',
@@ -54,7 +53,6 @@ export class UniversityController {
 
   @ApiBearerAuth()
   @UseGuards(SecurityGuard, ThrottlerGuard, AnalitycSearchCourseTeacherGuard)
-  @Throttle()
   @Get(':idUniversity/course/teacher/:skipe/')
   @ApiCreatedResponse({
     description: 'The university course and teacher has been successfully.',
@@ -83,7 +81,6 @@ export class UniversityController {
   }
 
   @UseGuards(ThrottlerGuard)
-  @Throttle()
   @Post('suggest')
   @ApiCreatedResponse({
     description: 'The university has been successfully.',

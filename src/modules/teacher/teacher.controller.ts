@@ -38,7 +38,6 @@ export class TeacherController {
   ) {}
 
   @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
-  @Throttle()
   @Get(':idTeacher/course/:idCourse')
   @ApiCreatedResponse({
     description: 'The teacher has been successfully.',
@@ -63,7 +62,6 @@ export class TeacherController {
   }
 
   @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
-  @Throttle()
   @Get(':idTeacher/course/:idCourse/comment')
   @ApiCreatedResponse({
     description: 'The teacher course comment has been successfully.',
@@ -85,7 +83,6 @@ export class TeacherController {
   }
 
   @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
-  @Throttle()
   @Get('career/:idCareer')
   @ApiCreatedResponse({
     description: 'The teacher career has been successfully.',
@@ -105,7 +102,6 @@ export class TeacherController {
   }
 
   @UseGuards(ThrottlerGuard)
-  @Throttle()
   @Get('university/:idUniversity/:skipe/')
   @ApiCreatedResponse({
     description: 'The teacher university has been successfully.',
@@ -132,7 +128,6 @@ export class TeacherController {
   }
 
   @UseGuards(ThrottlerGuard)
-  @Throttle()
   @Post('university/:idUniversity/compare')
   @ApiCreatedResponse({
     description: 'The teacher university compare has been successfully.',
@@ -157,7 +152,6 @@ export class TeacherController {
     );
   }
   @UseGuards(ThrottlerGuard, AnalitycSearchQualificationTeacherGuard)
-  @Throttle()
   @Get(':idTeacher/career/:idCareer')
   @ApiCreatedResponse({
     description: 'The teacher courses has been successfully.',
