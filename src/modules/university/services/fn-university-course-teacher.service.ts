@@ -155,6 +155,7 @@ export class FnUniversityCourseTeacherService {
         '$1',
       )
       .normalize()
+      .replace(/ñ/g, 'n')
       .toLowerCase()
       .replace(/ /g, '');
   }
