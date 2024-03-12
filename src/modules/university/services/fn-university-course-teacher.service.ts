@@ -30,7 +30,7 @@ export class FnUniversityCourseTeacherService {
       );
     }
 
-    if (search.length <= 3) {
+    if (search.length <= 3 && search != 'ALL') {
       throw new exception.SearchMaxLengthException(`SEARCH_MAX_LENGTH`);
     }
 
