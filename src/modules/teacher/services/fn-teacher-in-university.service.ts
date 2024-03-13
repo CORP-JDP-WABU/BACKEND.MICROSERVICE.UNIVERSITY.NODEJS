@@ -29,7 +29,7 @@ export class FnTeacherInUniversityService {
       );
     }
 
-    if (search.length <= 3) {
+    if (search.length <= 3 && search.length > 0) {
       throw new exception.SearchMaxLengthException(`SEARCH_MIN_LENGTH`);
     }
 
@@ -37,27 +37,24 @@ export class FnTeacherInUniversityService {
       throw new exception.SearchMaxLengthException(`SEARCH_MAX_LENGTH`);
     }
 
-    const countTeacherPromise = this.universityTeacherModel.countDocuments({
-      idUniversity: mongoose.Types.ObjectId(idUniversity),
-      searchTextKeys: {
-        $elemMatch: {
-          $regex: search,
-          $options: 'mi',
-        },
-      },
-    });
+    let query = {
+      idUniversity: mongoose.Types.ObjectId(idUniversity)
+    };
+    
+    if (search !== '') {
+        query['searchTextKeys'] = {
+            $elemMatch: {
+                $regex: search,
+                $options: 'mi',
+            },
+        };
+    }
+
+    const countTeacherPromise = this.universityTeacherModel.countDocuments(query);
 
     const universityTeacherPromise = this.universityTeacherModel
       .find(
-        {
-          idUniversity: mongoose.Types.ObjectId(idUniversity),
-          searchTextKeys: {
-            $elemMatch: {
-              $regex: search,
-              $options: 'mi',
-            },
-          },
-        },
+        query,
         {
           _id: 1,
           firstName: 1,
