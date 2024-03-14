@@ -58,6 +58,6 @@ export class CourseController {
     @Param('idCourse') idCourse: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {
-    return this.FnFindTeachersService.execute(idCourse, userDecorator);
+    return this.FnFindCourseProfileService.execute(idCourse, userDecorator);
   }
 }
