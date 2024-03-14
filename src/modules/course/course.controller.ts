@@ -22,6 +22,7 @@ import { UserDecoratorInterface } from 'src/common/interfaces';
 export class CourseController {
   constructor(
     private readonly FnFindTeachersService: services.FnFindTeachersService,
+    private readonly FnFindCourseProfileService: services.FnFindCourseProfileService
   ) {}
 
   @Get(':idCourse/teachers')
@@ -36,6 +37,24 @@ export class CourseController {
     description: 'The al teachers in course has been failed by internal error.',
   })
   findAllTeachersInCourse(
+    @Param('idCourse') idCourse: string,
+    @UserDecorator() userDecorator: UserDecoratorInterface,
+  ): Promise<response.ResponseGenericDto> {
+    return this.FnFindTeachersService.execute(idCourse, userDecorator);
+  }
+
+  @Get(':idCourse/profile')
+  @ApiCreatedResponse({
+    description: 'The profile course has been successfully.',
+    type: response.ResponseGenericDto,
+  })
+  @ApiConflictResponse({
+    description: 'The profile course has been failed by conflict.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'The profile course has been failed by internal error.',
+  })
+  findProfile(
     @Param('idCourse') idCourse: string,
     @UserDecorator() userDecorator: UserDecoratorInterface,
   ): Promise<response.ResponseGenericDto> {

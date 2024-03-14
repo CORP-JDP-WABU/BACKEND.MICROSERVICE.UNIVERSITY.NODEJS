@@ -1,3 +1,4 @@
+export * from './profile-course.schema';
 export * from './suggests.schema';
 export * from './career-teacher-course.schema';
 export * from './teacher-course-comment';

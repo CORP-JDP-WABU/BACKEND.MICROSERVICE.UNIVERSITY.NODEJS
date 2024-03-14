@@ -16,10 +16,14 @@ import { CourseController } from './course.controller';
         name: schemas.UniversityCourse.name,
         schema: schemas.UniversityCourseSchema,
       },
+      {
+        name: schemas.ProfileCourse.name,
+        schema: schemas.ProfileCourseSchema
+      }
     ]),
     CryptoModule,
   ],
   controllers: [CourseController],
-  providers: [services.FnFindTeachersService],
+  providers: [services.FnFindTeachersService, services.FnFindCourseProfileService],
 })
 export class CourseModule {}
