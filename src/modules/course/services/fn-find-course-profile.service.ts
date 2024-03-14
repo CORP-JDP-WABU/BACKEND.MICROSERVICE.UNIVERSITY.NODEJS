@@ -44,8 +44,12 @@ export class FnFindCourseProfileService {
         for (const universityTeacher of universityTeacherPromise) {
             const course = universityTeacher.courses.find(x => x._id.toString() === idCourse);
             if(course) {
-                averageQualification = course.manyAverageQualifications + averageQualification;
-                amountDivide = amountDivide++;
+
+                if(course.manyAverageQualifications > 0) {
+                    averageQualification = course.manyAverageQualifications + averageQualification;
+                    amountDivide = amountDivide++;
+                }
+
                 quantityComment = course.manyComments + quantityComment;
                 teachers.push({
                     _id: universityTeacher._id,
