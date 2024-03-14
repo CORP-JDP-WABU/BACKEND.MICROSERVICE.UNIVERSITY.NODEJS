@@ -39,10 +39,8 @@ export class ProfileCourse {
 
   @Prop(
     raw({
-        documents: {
-            exams: Number,
-            summaries: Number
-        }
+        exams: Number,
+        summaries: Number
     }),
   )
   documents: {
