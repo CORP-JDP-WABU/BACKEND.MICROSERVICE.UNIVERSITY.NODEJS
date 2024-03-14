@@ -60,7 +60,7 @@ export class FnFindCourseProfileService {
             _id: universityCoursePromise._id,
             idUniversity: mongoose.Types.ObjectId(userDecorator.idUniversity),
             name: universityCoursePromise.name,
-            averageQualification: averageQualification == 0 ? 0 : averageQualification/amountDivide,
+            averageQualification: averageQualification == 0 || amountDivide == 0 ? 0 : averageQualification/amountDivide,
             quantityComment,
             teachers,
             documents: {
