@@ -29,3 +29,9 @@ export class DeleteTokenInSecurityException extends InternalServerErrorException
     super(`${DeleteTokenInSecurityException.name}`);
   }
 }
+
+export class UpdateDocumentsInProfileCourseException extends InternalServerErrorException {
+  constructor() {
+    super(`${UpdateDocumentsInProfileCourseException.name}`);
+  }
+}

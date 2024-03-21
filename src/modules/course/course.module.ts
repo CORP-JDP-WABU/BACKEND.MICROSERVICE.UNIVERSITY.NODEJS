@@ -19,7 +19,11 @@ import { CourseController } from './course.controller';
       {
         name: schemas.ProfileCourse.name,
         schema: schemas.ProfileCourseSchema
-      }
+      },
+      {
+        name: schemas.UniversityCourseDoc.name,
+        schema: schemas.UniversityCourseDocSchema
+      },
     ]),
     CryptoModule,
   ],

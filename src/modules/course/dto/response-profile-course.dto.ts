@@ -10,7 +10,22 @@ class Docs {
     exams: number;
 
     @ApiProperty()
-    summaries: number;
+    excercies: number;
+
+    @ApiProperty()
+    notes: number;
+    
+    @ApiProperty()
+    summary: number;
+
+    @ApiProperty()
+    presentations: number;
+
+    @ApiProperty()
+    worked: number;
+
+    @ApiProperty()
+    syllables: number;
 }
 
 export class ResponseProfileCourseDto {

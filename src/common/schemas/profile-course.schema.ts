@@ -40,12 +40,22 @@ export class ProfileCourse {
   @Prop(
     raw({
         exams: Number,
-        summaries: Number
+        excercies: Number,
+        notes: Number,
+        summary: Number,
+        presentations: Number,
+        worked: Number,
+        syllables: Number
     }),
   )
   documents: {
     exams: number;
-    summaries: number;
+    excercies: number;
+    notes: number;
+    summary: number;
+    presentations: number;
+    worked: number;
+    syllables: number;
   };
 
   @Prop({

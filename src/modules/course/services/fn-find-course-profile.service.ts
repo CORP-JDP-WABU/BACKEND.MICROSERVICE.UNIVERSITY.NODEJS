@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as schemas from 'src/common/schemas';
 import * as exception from 'src/exception';
+import * as enums from 'src/common/enum';
 import * as response from 'src/common/dto';
 import * as dto from '../dto';
 import { UserDecoratorInterface } from 'src/common/interfaces';
@@ -18,7 +19,9 @@ export class FnFindCourseProfileService {
     @InjectModel(schemas.UniversityCourse.name)
     private readonly universityCourseModel: mongoose.Model<schemas.UniversityCourseDocument>,
     @InjectModel(schemas.UniversityTeacher.name)
-    private readonly universityTeacherModel: mongoose.Model<schemas.UniversityTeacherDocument>
+    private readonly universityTeacherModel: mongoose.Model<schemas.UniversityTeacherDocument>,
+    @InjectModel(schemas.UniversityCourseDoc.name)
+    private readonly universityCourseDocModel: mongoose.Model<schemas.UniversityCourseDocDocument>,
   ) {}
 
   async execute(idCourse: string, userDecorator: UserDecoratorInterface) {
@@ -35,10 +38,12 @@ export class FnFindCourseProfileService {
 
         const [
             universityCoursePromise,
-            universityTeacherPromise
+            universityTeacherPromise,
+            universityCourseDocPromise
         ] = await Promise.all([
             this.universityCourseModel.findById(idCourseMongoose),
-            this.universityTeacherModel.find({ "courses._id": idCourseMongoose })
+            this.universityTeacherModel.find({ "courses._id": idCourseMongoose }),
+            this.universityCourseDocModel.find({ "course.idCourse": idCourse })
         ])
         
         for (const universityTeacher of universityTeacherPromise) {
@@ -60,6 +65,23 @@ export class FnFindCourseProfileService {
             }
         }
 
+        let documents = {
+            exams: 0,
+            excercies: 0,
+            notes: 0,
+            summary: 0,
+            presentations: 0,
+            worked: 0,
+            syllables: 0
+        };
+        if(universityCourseDocPromise.length > 0) {
+            let allDocuments = [];
+            for (const universityCourseDoc of universityCourseDocPromise) {
+              allDocuments.push(...universityCourseDoc.documents)
+            }
+            documents = this.countDocumentsByType(allDocuments);
+        }
+
         const newProfileCourse = await this.profileCourseModel.create({
             _id: universityCoursePromise._id,
             idUniversity: mongoose.Types.ObjectId(userDecorator.idUniversity),
@@ -67,10 +89,7 @@ export class FnFindCourseProfileService {
             averageQualification: averageQualification == 0 || amountDivide == 0 ? 0 : averageQualification/amountDivide,
             quantityComment,
             teachers,
-            documents: {
-                exams: 0,
-                summaries: 0
-            },
+            documents,
             auditProperties: {
                 status: {
                     code: 1,
@@ -102,8 +121,7 @@ export class FnFindCourseProfileService {
             quantityComment: newProfileCourse.quantityComment,
             averageQualification: newProfileCourse.averageQualification,
             documents: {
-                exams: newProfileCourse.documents.exams,
-                summaries: newProfileCourse.documents.summaries
+                ...newProfileCourse.documents
             },
             teachers: newProfileCourse.teachers.map(x => {
                 return {
@@ -115,5 +133,29 @@ export class FnFindCourseProfileService {
         }
     }
   }
+ 
+  private countDocumentsByType(documents: any[]) : any {
+    const expectedTypes : string[] = Object.values(enums.DocumentTypeEnum).filter(
+      value => typeof value === 'string'
+    );
+    const countsMap = new Map<string, number>();
+    expectedTypes.forEach(type => countsMap.set(type, 0));
+
+    documents.forEach(document => {
+      const { documentType } = document;
+      if (countsMap.has(documentType)) {
+        countsMap.set(documentType, countsMap.get(documentType)! + 1);
+      } else {
+        countsMap.set(documentType, 1);
+      }
+    });
+
+    const result: { [key: string]: number } = {};
+    countsMap.forEach((count, documentType) => {
+      result[documentType.toLowerCase()] = count;
+    });
   
+    return result;
+  }
+
 }
