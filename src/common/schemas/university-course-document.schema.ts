@@ -13,35 +13,38 @@ export class UniversityCourseDoc {
   course: { idCourse: mongoose.Types.ObjectId; name: string; searchText: string };
 
   @Prop({ type: String })
+  teacher: string;
+
+  @Prop({ type: String })
   cicleName: string;
 
   @Prop(
     raw({
-      type: []
-    })
-  )
-  teachers: string[];
-
-  @Prop(
-    raw({
-      type: [
-        {
-          _id: mongoose.Types.ObjectId,
-          fileName: String,
+          student: {
+            idStudent: mongoose.Types.ObjectId,
+            fullName: String,
+            profileUrl: String,
+          },
+          searchName: String,
+          originalName: String,
           documentType: String,
           extension: String,
           url: String
         }
-      ]
-    })
+    )
   )
-  documents: {
-    _id: mongoose.Types.ObjectId;
-    fileName: string;
+  document: {
+    student: {
+      idStudent: mongoose.Types.ObjectId;
+      fullName: string;
+      profileUrl: string;
+    };
+    searchName: string;
+    originalName: string;
     documentType: string;
     extension: string;
     url: string;
-  }[];
+  };
 
   @Prop({
     type: AuditPropertiesSchema,

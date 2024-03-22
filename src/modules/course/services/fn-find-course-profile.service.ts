@@ -77,7 +77,7 @@ export class FnFindCourseProfileService {
         if(universityCourseDocPromise.length > 0) {
             let allDocuments = [];
             for (const universityCourseDoc of universityCourseDocPromise) {
-              allDocuments.push(...universityCourseDoc.documents)
+              allDocuments.push(universityCourseDoc.document)
             }
             documents = this.countDocumentsByType(allDocuments);
         }
