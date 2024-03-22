@@ -7,25 +7,10 @@ class Teachers {
 
 class Docs {
     @ApiProperty()
-    exams: number;
+    documentType: string;
 
     @ApiProperty()
-    excercies: number;
-
-    @ApiProperty()
-    notes: number;
-    
-    @ApiProperty()
-    summary: number;
-
-    @ApiProperty()
-    presentations: number;
-
-    @ApiProperty()
-    worked: number;
-
-    @ApiProperty()
-    syllables: number;
+    quantity: number;
 }
 
 export class ResponseProfileCourseDto {
@@ -42,8 +27,8 @@ export class ResponseProfileCourseDto {
     @ApiProperty()
     quantityComment: number;
     
-    @ApiProperty({ type: Docs, isArray: false })
-    documents: Docs
+    @ApiProperty({ type: [Docs], isArray: true })
+    documents: Docs[]
 
     //@ApiProperty({ type: [Teachers], isArray: true })
     //teachers: Teachers[]

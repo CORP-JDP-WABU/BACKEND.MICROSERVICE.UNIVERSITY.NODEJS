@@ -81,7 +81,6 @@ export class FnFindCourseProfileService {
             }
             documents = this.countDocumentsByType(allDocuments);
         }
-
         const newProfileCourse = await this.profileCourseModel.create({
             _id: universityCoursePromise._id,
             idUniversity: mongoose.Types.ObjectId(userDecorator.idUniversity),
@@ -120,9 +119,7 @@ export class FnFindCourseProfileService {
             course: newProfileCourse.name,
             quantityComment: newProfileCourse.quantityComment,
             averageQualification: newProfileCourse.averageQualification,
-            documents: {
-                ...newProfileCourse.documents
-            },
+            documents: this.transforDocumentToArray(newProfileCourse.documents),
             teachers: newProfileCourse.teachers.map(x => {
                 return {
                     idTeacher: x._id.toString(),
@@ -134,6 +131,48 @@ export class FnFindCourseProfileService {
     }
   }
  
+  private transforDocumentToArray(documents: any) : any[]{
+
+    const { exams, excercies, notes, summary, presentations, worked, syllables } = documents;
+    const totalQuantity = exams + excercies + notes + summary + presentations + worked + syllables;
+    const transformDocumentsToArray = [
+      {
+          typeDocument: 'ALL',
+          quantity: totalQuantity
+      },
+      {
+          typeDocument: enums.DocumentTypeEnum.EXAMS,
+          quantity: exams
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.EXCERCIES,
+        quantity: excercies
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.NOTES,
+        quantity: notes
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.SUMMARY,
+        quantity: summary
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.PRESENTATIONS,
+        quantity: presentations
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.WORKED,
+        quantity: worked
+      },
+      {
+        typeDocument: enums.DocumentTypeEnum.SYLLABLES,
+        quantity: syllables
+      }
+    ];
+
+    return transformDocumentsToArray;
+  }
+
   private countDocumentsByType(documents: any[]) : any {
     const expectedTypes : string[] = Object.values(enums.DocumentTypeEnum).filter(
       value => typeof value === 'string'
