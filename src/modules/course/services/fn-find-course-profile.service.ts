@@ -138,34 +138,42 @@ export class FnFindCourseProfileService {
     const transformDocumentsToArray = [
       {
           typeDocument: 'ALL',
+          name: 'Ver todos',
           quantity: totalQuantity
       },
       {
           typeDocument: enums.DocumentTypeEnum.EXAMS,
+          name: 'Exámenes',
           quantity: exams
       },
       {
         typeDocument: enums.DocumentTypeEnum.EXCERCIES,
+        name: 'Ejercicios',
         quantity: excercies
       },
       {
         typeDocument: enums.DocumentTypeEnum.NOTES,
+        name: 'Contenido de clases',
         quantity: notes
       },
       {
         typeDocument: enums.DocumentTypeEnum.SUMMARY,
+        name: 'Resúmenes',
         quantity: summary
       },
       {
         typeDocument: enums.DocumentTypeEnum.PRESENTATIONS,
+        name: 'Presentaciones',
         quantity: presentations
       },
       {
         typeDocument: enums.DocumentTypeEnum.WORKED,
+        name: 'Trabajos finales',
         quantity: worked
       },
       {
         typeDocument: enums.DocumentTypeEnum.SYLLABLES,
+        name: 'Sílabos',
         quantity: syllables
       }
     ];
