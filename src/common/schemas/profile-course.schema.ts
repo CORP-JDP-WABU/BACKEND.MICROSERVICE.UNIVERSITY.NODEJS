@@ -25,7 +25,8 @@ export class ProfileCourse {
           _id: mongoose.Types.ObjectId,
           firstName: String,
           lastName: String,
-          averageQualification: Number
+          averageQualification: Number,
+          photoUrl: String
         },
       ],
     }),
@@ -35,6 +36,7 @@ export class ProfileCourse {
     firstName: string;
     lastName: string;
     averageQualification: number;
+    photoUrl: string;
   }[];
 
   @Prop(

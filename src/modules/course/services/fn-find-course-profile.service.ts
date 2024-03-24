@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 import * as schemas from 'src/common/schemas';
-import * as exception from 'src/exception';
 import * as enums from 'src/common/enum';
 import * as response from 'src/common/dto';
 import * as dto from '../dto';
@@ -60,7 +59,8 @@ export class FnFindCourseProfileService {
                     _id: universityTeacher._id,
                     firstName: universityTeacher.firstName,
                     lastName: universityTeacher.lastName,
-                    averageQualification: course.manyAverageQualifications
+                    averageQualification: course.manyAverageQualifications,
+                    photoUrl: universityTeacher.url
                 })
             }
         }
@@ -124,7 +124,8 @@ export class FnFindCourseProfileService {
                 return {
                     idTeacher: x._id.toString(),
                     firstName: x.firstName,
-                    averageQualification: x.averageQualification
+                    averageQualification: x.averageQualification,
+                    prothoUrl: x.photoUrl
                 }
             })
         }
