@@ -318,7 +318,7 @@ export class FnTeacherInUniversityService {
           ? 0
           : countOptionalQualificationWorked > 0 &&
             sumOptionalQualificationWorked > 0
-          ? sumRequiredQualificationLear / countOptionalQualificationWorked
+          ? sumOptionalQualificationWorked / countOptionalQualificationWorked
           : 0,
       late:
         countOptionalQualificationLate == 0
